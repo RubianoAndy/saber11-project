@@ -278,7 +278,7 @@ Para limpiar los artefactos temporales:
 cd reports/entregable1 && latexmk -c
 ```
 
-> ⚠️ **No compilar con `-outdir` ni con `-output-directory`.** BibTeX se ejecuta con el directorio de trabajo en la carpeta de salida y desde allí la ruta relativa a `utils/references/references.bib` no existe.
+> ⚠️ **No compilar con `-outdir` ni con `-output-directory`.** BibTeX se ejecuta con el directorio de trabajo en la carpeta de salida y no encuentra `references.bib`: el informe queda con todas las citas sin resolver. El archivo [`.vscode/settings.json`](.vscode/settings.json) fija `latex-workshop.latex.outDir` en `%DIR%` para este proyecto, y prevalece sobre la configuración global de VS Code (si esta apunta a `%DIR%/build`, borra la carpeta `build` que haya quedado).
 
 ---
 

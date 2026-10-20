@@ -12,6 +12,7 @@
 
         \vspace{10pt}
 
+        {\sloppy\hbadness=5000
         Dos columnas son constantes (\texttt{periodo} y
         \texttt{estu\_estudiante}) y tres casi constantes,
         \texttt{cole\_calendario} (99,58\,\% A, porque los colegios de calendario
@@ -19,6 +20,7 @@
         (99,96\,\%) y \texttt{estu\_privado\_libertad} (99,95\,\%). Los códigos
         y nombres del colegio tienen entre 9.412 y 13.748 niveles y los
         municipios más de 1.000, mientras que el departamento tiene 33.
+        \par}
 
         \vspace{10pt}
 
@@ -308,11 +310,13 @@
         conjunto de trabajo para la fase 2 queda en 532.792 registros y cerca de
         22 variables explicativas, con el puntaje global como objetivo.
 
-        \begin{table}[H]
+        \clearpage
+        \begin{strip}
             \centering
-            \caption{Hallazgos del análisis exploratorio y decisiones para la fase 2}
+            \captionof{table}{Hallazgos del análisis exploratorio y decisiones para la fase 2}
             \label{decisions}
-            \begin{tabular}{p{3.6cm}p{4.2cm}}
+            \small
+            \begin{tabular}{L{7.6cm}L{9.6cm}}
                 \toprule
                 \textbf{Hallazgo} & \textbf{Decisión} \\
                 \midrule
@@ -330,4 +334,4 @@
                 $R^2$ lineal de 0,242 & Referencia: regresión lineal regularizada; meta de la fase 3: superarla con modelos no lineales. \\
                 \bottomrule
             \end{tabular}
-        \end{table}
+        \end{strip}

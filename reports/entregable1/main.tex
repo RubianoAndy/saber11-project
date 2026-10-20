@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{array}
 \usepackage{cuted}     % entorno strip: bloque a doble columna que no flota
 \usepackage{capt-of}   % \captionof, para rotular dentro de un strip
 \usepackage{tcolorbox}
@@ -23,6 +24,11 @@
 \newcommand{\repo}{../../}
 
 \pagestyle{plain}
+
+% Evita líneas sueltas por palabras en monoespaciado que no se pueden cortar
+\setlength{\emergencystretch}{2em}
+\renewcommand{\_}{\textunderscore\allowbreak{}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \newif\ifshowwatermark
 \showwatermarktrue
