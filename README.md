@@ -83,6 +83,7 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 │       ├── main.tex                  # Documento principal (preámbulo + \input de secciones)
 │       ├── main.pdf                  # Informe compilado (17 páginas)
 │       ├── IEEEtran.cls              # Clase LaTeX del formato IEEE conference
+│       ├── references.bib            # Bibliografía IEEE (14 referencias)
 │       └── src/
 │           ├── sections/             # abstract, introduction, problem, dataset, methodology, results, conclusions
 │           └── appendices/           # Apéndice A: cuaderno de Google Colab
@@ -106,7 +107,6 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
     │   ├── correlations/                      # Codificación ordinal y matriz de Spearman
     │   └── exploratory-fit/                   # Regresión lineal exploratoria
     └── references/
-        └── references.bib            # Bibliografía IEEE (14 referencias)
 ```
 
 ---
