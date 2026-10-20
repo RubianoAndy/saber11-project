@@ -1,0 +1,212 @@
+\section{Metodología}
+    El análisis se realizó en un cuaderno de Google Colab cuyos segmentos de
+    código se reproducen a lo largo de este informe en el mismo orden en que se
+    ejecutan, puesto que cada paso depende del anterior, iniciando con la
+    preparación del entorno, siguiendo con la descarga y verificación del
+    conjunto, la depuración de duplicados, el tratamiento de los valores faltantes
+    y la conversión de tipos, la caracterización de la variable objetivo y, por
+    último, el examen de su relación con cada grupo de variables explicativas. El
+    enfoque sigue la lógica del análisis exploratorio de datos de Tukey, mirar los
+    datos antes de modelarlos para descubrir su estructura y sus anomalías
+    \cite{tukey1977exploratory}, dentro del marco de fases de CRISP-DM
+    \cite{chapman2000crisp}.
+
+    \subsection{Entorno de trabajo y reproducibilidad}
+        El cuaderno utiliza únicamente librerías preinstaladas en Colab,
+        \textit{pandas} para la carga y agregación de datos
+        \cite{mckinney2010pandas}, \textit{matplotlib} y \textit{seaborn} para las
+        figuras \cite{hunter2007matplotlib}, \cite{waskom2021seaborn},
+        \textit{scipy} para la correlación de Spearman y \textit{scikit-learn} para
+        el ajuste lineal exploratorio \cite{pedregosa2011scikit}. Las rutas se
+        resuelven respecto de la raíz del repositorio, de modo que las figuras se
+        guardan en \texttt{assets/images/data/}, que es de donde las toma este
+        informe.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/environment-setup/environment-setup.py}
+
+        \vspace{10pt}
+
+        Luego se fija la identidad gráfica, un azul para la variable objetivo y
+        las series principales, un naranja para contrastes y un tono neutro para
+        las descripciones del conjunto, y la semilla global \texttt{RANDOM\_STATE
+        = 42}, que gobierna el único muestreo del cuaderno.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/graphic-identity/graphic-identity.py}
+
+    \subsection{Descarga y carga del conjunto}
+        El Portal Nacional de Datos Abiertos expone el conjunto a través de la API
+        de Socrata, que admite filtros en la URL. En lugar de descargar los 7,1
+        millones de registros de todos los periodos, se solicita únicamente el
+        periodo 2022-4 con un límite superior al número esperado de filas y un
+        orden fijo por identificador, de modo que la descarga sea determinista. El
+        archivo se guarda en \texttt{data/raw/} y, si ya existe, se reutiliza.
+        Como todas las columnas llegan como texto, las categóricas se leen
+        directamente como \texttt{category}, los puntajes como \texttt{float32} y
+        los identificadores como cadena, lo que reduce la memoria del conjunto a
+        una fracción del tamaño del archivo.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/dataset-download/dataset-download.py}
+
+        \vspace{10pt}
+
+        La estructura del conjunto se verifica columna por columna, tipo,
+        cantidad de valores no nulos, porcentaje de faltantes, cardinalidad y un
+        valor de ejemplo, que es la base del diccionario de variables de la
+        Sección~III.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/dataset-structure/dataset-structure.py}
+
+    \subsection{Calidad de los datos}
+        Se cuentan los registros duplicados y se comprueba si el identificador
+        \texttt{estu\_consecutivo} es único; los duplicados exactos se eliminan y
+        el resto del análisis se realiza sobre el conjunto depurado. Se
+        identifican además las columnas constantes y las de muy poca variación,
+        que no aportan información a un modelo, y se tabula la cardinalidad de
+        cada variable categórica, que determina su codificación en la fase 2.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/data-quality/data-quality.py}
+
+        \vspace{10pt}
+
+        Los valores faltantes se cuantifican por columna y se examina si los del
+        bloque \texttt{fami\_*} ocurren juntos, lo que indicaría estudiantes que
+        no diligenciaron el cuestionario, o de forma independiente; también se
+        compara el puntaje de quienes no tienen cuestionario con el del resto,
+        para saber si la ausencia es informativa.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/missing-values/missing-values.py}
+
+        \vspace{10pt}
+
+        Por último se convierte la fecha de nacimiento en la edad al momento de
+        la prueba, tomando como referencia la fecha de aplicación del calendario A
+        de 2022, y se fija el orden natural de las variables ordinales (estrato,
+        educación de los padres, personas y cuartos del hogar, nivel de inglés),
+        que \texttt{category} no conoce por sí misma.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/type-conversion/type-conversion.py}
+
+    \subsection{Variable objetivo}
+        La distribución de \texttt{punt\_global} se caracteriza con sus
+        estadísticas descriptivas, su asimetría y curtosis, un histograma y un
+        diagrama de caja. Luego se verifica la fórmula con la que el ICFES
+        construye el puntaje global a partir de las cinco pruebas
+        \cite{icfes2022guia},
+        \begin{equation}
+            \label{global_formula}
+            G = \operatorname{round}\!\left(
+                \frac{3\,LC + 3\,MAT + 3\,SOC + 3\,CN + 1\,ING}{13} \times 5
+            \right),
+        \end{equation}
+        donde $LC$, $MAT$, $SOC$, $CN$ e $ING$ son los puntajes de lectura
+        crítica, matemáticas, sociales y ciudadanas, ciencias naturales e inglés.
+        Si la fórmula se cumple sobre los datos, los puntajes por área son
+        componentes de la respuesta y no variables explicativas, y su inclusión en
+        un modelo constituiría una fuga de información \cite{kaufman2012leakage}.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/target-distribution/target-distribution.py}
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/target-formula/target-formula.py}
+
+    \subsection{Análisis bivariado por grupo de variables}
+        Para cada variable categórica se calcula el tamaño, la media, la mediana y
+        la desviación del puntaje global por categoría, y se grafica con diagramas
+        de caja sin valores atípicos, de modo que la comparación entre grupos no
+        quede dominada por los extremos. Dos funciones auxiliares,
+        \texttt{resumen\_por} y \texttt{caja\_por}, encapsulan ese patrón y se
+        reutilizan en las secciones de estudiante, hogar y colegio. La edad se
+        agrupa en tramos, porque su relación con el puntaje no tiene por qué ser
+        lineal.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/student-variables/student-variables.py}
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/family-variables/family-variables.py}
+
+        \vspace{10pt}
+
+        Para las variables binarias del hogar se compara la media del puntaje
+        entre quienes tienen y no tienen cada bien, y se reporta la diferencia en
+        puntos.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/family-binary/family-binary.py}
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/school-variables/school-variables.py}
+
+        \vspace{10pt}
+
+        Como naturaleza y área se cruzan (la mayoría de colegios rurales son
+        oficiales), se tabula el puntaje medio en las cuatro combinaciones.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/school-crosstab/school-crosstab.py}
+
+        \vspace{10pt}
+
+        Para la geografía se calcula el puntaje medio por departamento del
+        colegio, se ordena y se contrasta con la media nacional.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/geography/geography.py}
+
+    \subsection{Correlaciones y ajuste lineal exploratorio}
+        Las variables ordinales se codifican con enteros que respetan su orden,
+        estrato de 0 a 6 y nivel educativo de 0 a 9 (las categorías \textit{No
+        sabe} y \textit{No Aplica} se tratan como faltantes), las binarias con 0 y
+        1, y se calcula la correlación de Spearman \cite{spearman1904proof},
+        \begin{equation}
+            \label{spearman}
+            \rho = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n\,(n^2 - 1)},
+        \end{equation}
+        donde $d_i$ es la diferencia entre los rangos de las dos variables para la
+        observación $i$. Se eligió Spearman en lugar de Pearson porque mide
+        asociaciones monótonas, no solo lineales, y es apropiada para variables
+        ordinales. La matriz incluye los puntajes por área para documentar el
+        contraste entre una variable explicativa legítima y una que forma parte de
+        la respuesta.
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/correlations/correlations.py}
+
+        \vspace{10pt}
+
+        Finalmente se ajusta una regresión lineal exploratoria sobre las
+        variables codificadas, excluidos los puntajes por área, con una muestra
+        aleatoria de 200.000 filas completas y una partición 80/20. No es el
+        modelo de referencia de la fase 2, que se construirá con la limpieza
+        completa y la partición definitiva, sino una cota rápida de cuánta
+        varianza del puntaje explican las variables candidatas en conjunto,
+        medida con el coeficiente de determinación $R^2$ y el error absoluto medio
+        (MAE).
+
+        \vspace{10pt}
+
+        \lstinputlisting{\repo utils/codes/exploratory-fit/exploratory-fit.py}

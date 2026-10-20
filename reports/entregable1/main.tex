@@ -1,0 +1,122 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{cuted}     % entorno strip: bloque a doble columna que no flota
+\usepackage{capt-of}   % \captionof, para rotular dentro de un strip
+\usepackage{tcolorbox}
+\usepackage{eso-pic}
+\usepackage{transparent}
+\usepackage{hyperref}  % debe cargarse de último para no duplicar anclas de floats
+
+% El informe se compila dentro de reports/entregable1/; las figuras y los
+% segmentos de código viven en la raíz del repositorio.
+\graphicspath{{../../}}
+\newcommand{\repo}{../../}
+
+\pagestyle{plain}
+
+\newif\ifshowwatermark
+\showwatermarktrue
+\AddToShipoutPictureBG{%
+    \ifshowwatermark
+        \AtPageCenter{%
+            \makebox(0,0){%
+                \transparent{0.18}%
+                \includegraphics[width=1.0\textwidth]{assets/images/Logo}%
+            }%
+        }%
+    \fi
+}
+
+\lstset{
+    language=Python,
+    columns=fullflexible,
+    basicstyle=\ttfamily\scriptsize\color[RGB]{30,30,30},
+    keywordstyle=\bfseries\color[RGB]{0,90,160},
+    commentstyle=\itshape\color[RGB]{100,100,100},
+    stringstyle=\color[RGB]{160,60,0},
+    numberstyle=\tiny\color[RGB]{150,150,150},
+    numbers=left,
+    numbersep=8pt,
+    stepnumber=1,
+    backgroundcolor=\color[RGB]{248,248,252},
+    frame=none,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=false,
+    tabsize=4,
+    captionpos=b,
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+        {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {ü}{{\"u}}1 {Ü}{{\"U}}1
+        {°}{{\textdegree}}1
+        {²}{{$^2$}}1
+        {≤}{{$\leq$}}1
+        {≥}{{$\geq$}}1
+        {→}{{$\rightarrow$}}1
+        {·}{{$\cdot$}}1
+        {−}{{$-$}}1
+        {¨}{}1,
+    morekeywords={np, plt, axes, fig, df, pd, sns}
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\renewcommand{\refname}{Referencias}
+
+\addto\captionsspanish{%
+    \renewcommand{\tablename}{Tabla}%
+    \renewcommand{\lstlistingname}{Código}%
+}
+
+\begin{document}
+    \raggedbottom
+    \bstctlcite{IEEEtran:BSTcontrol}
+
+    \title{
+        Predicción del puntaje global de la prueba Saber 11 a partir de variables
+        socioeconómicas y del colegio: planteamiento del problema y análisis exploratorio
+    }
+
+    \author{\IEEEauthorblockN{
+        Andrés Giovanny Rubiano Muñoz ``Andy Rubiano''}
+        \IEEEauthorblockA{
+            \textit{Maestría en Inteligencia Artificial, Facultad de Ingeniería} \\
+            \textit{Universidad de La Salle} \\
+            Bogotá, Colombia \\
+            arubiano67@unisalle.edu.co
+        }
+    }
+
+    \maketitle
+    \thispagestyle{plain}
+
+    \input{src/sections/abstract/abstract.tex}
+
+    \input{src/sections/introduction/introduction.tex}
+    \input{src/sections/problem/problem.tex}
+    \input{src/sections/dataset/dataset.tex}
+    \input{src/sections/methodology/methodology.tex}
+    \input{src/sections/results/results.tex}
+    \input{src/sections/conclusions/conclusions.tex}
+
+    \appendices
+    \input{src/appendices/colab-notebook/colab-notebook.tex}
+
+    \bibliographystyle{IEEEtran}
+    \bibliography{\repo utils/references/references.bib}
+\end{document}

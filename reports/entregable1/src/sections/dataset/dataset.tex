@@ -1,0 +1,86 @@
+\section{Conjunto de datos}
+    \subsection{Origen y licencia}
+        El conjunto \textit{Resultados únicos Saber 11} es publicado por el
+        Instituto Colombiano para la Evaluación de la Educación (ICFES) en el
+        Portal Nacional de Datos Abiertos de Colombia, bajo el identificador
+        \texttt{kgxf-xxbe} y con licencia Creative Commons Attribution-ShareAlike
+        4.0 (CC BY-SA 4.0), que permite su uso, redistribución y adaptación con
+        atribución \cite{icfes2023resultados}. Reúne 7,1 millones de registros
+        anónimos de las aplicaciones realizadas entre 2010 y 2022, uno por
+        estudiante y periodo, con 51 columnas, y su última actualización data de
+        agosto de 2023. El portal expone los datos mediante la API de Socrata, lo
+        que permite descargar un periodo específico con un filtro en la URL sin
+        necesidad de registro.
+
+    \subsection{Periodo seleccionado y tamaño}
+        Se trabaja con el periodo 2022-4, correspondiente a la aplicación del
+        calendario A del segundo semestre de 2022, que es la que presenta la gran
+        mayoría de colegios del país y el periodo más reciente y numeroso del
+        conjunto. La descarga pesa 560 MB y contiene 1.065.888 filas; como se
+        muestra en la Sección~V, la mitad de ellas son duplicados exactos y el
+        conjunto de trabajo queda en 532.792 estudiantes. La Tabla~\ref{dataset_summary}
+        resume sus características.
+
+        \begin{table}[H]
+            \centering
+            \caption{Resumen del conjunto de datos}
+            \label{dataset_summary}
+            \begin{tabular}{ll}
+                \toprule
+                \textbf{Aspecto} & \textbf{Valor} \\
+                \midrule
+                Fuente & datos.gov.co, conjunto \texttt{kgxf-xxbe} \\
+                Publicador & ICFES \\
+                Licencia & CC BY-SA 4.0 \\
+                Periodo & 2022-4 (calendario A, segundo semestre) \\
+                Filas descargadas & 1.065.888 \\
+                Filas únicas & 532.792 \\
+                Columnas & 51 \\
+                Variable objetivo & \texttt{punt\_global} (0 a 500) \\
+                Tamaño en disco & 560 MB (CSV) \\
+                Tamaño en memoria & 131 MB (tipos categóricos) \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+
+    \subsection{Variables}
+        Las 51 columnas se agrupan en cinco bloques según su prefijo, descritos
+        en la Tabla~\ref{variables}. Todas llegan como texto; en el cuaderno las
+        categóricas se leen como \texttt{category}, los puntajes como numéricos y
+        los identificadores como cadena.
+
+        \begin{table}[H]
+            \centering
+            \caption{Bloques de variables del conjunto}
+            \label{variables}
+            \begin{tabular}{p{2.1cm}p{5.6cm}}
+                \toprule
+                \textbf{Bloque} & \textbf{Contenido} \\
+                \midrule
+                Identificación (5) & Periodo, identificador anónimo
+                (\texttt{estu\_consecutivo}), tipo de documento, condición del
+                evaluado y estado del resultado. \\
+                Colegio, \texttt{cole\_*} (17) & Códigos DANE e ICFES, nombres
+                del establecimiento y la sede, naturaleza (oficial o no oficial),
+                área (urbana o rural), calendario, carácter (académico o técnico),
+                jornada, género de la población, bilingüismo y ubicación
+                (departamento y municipio). \\
+                Estudiante, \texttt{estu\_*} (13) & Género, fecha de nacimiento,
+                nacionalidad, lugar de residencia, lugar de presentación de la
+                prueba y privación de la libertad. \\
+                Hogar, \texttt{fami\_*} (9) & Estrato de la vivienda, máximo
+                nivel educativo de la madre y del padre, personas y cuartos del
+                hogar y tenencia de internet, computador, automóvil y lavadora;
+                provienen del cuestionario que el estudiante diligencia al
+                inscribirse. \\
+                Resultados (7) & Puntaje en lectura crítica, matemáticas,
+                sociales y ciudadanas, ciencias naturales e inglés (0 a 100),
+                nivel de desempeño en inglés y puntaje global (0 a 500). \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+
+        La variable objetivo es el puntaje global. Las variables explicativas
+        candidatas son las de los bloques de estudiante, hogar y colegio, más el
+        departamento y el municipio del colegio; los resultados por área se
+        excluyen por la razón que se verifica en la Sección~V.

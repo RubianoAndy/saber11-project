@@ -1,0 +1,80 @@
+\section{Cuaderno de Google Colab}
+    Todo el desarrollo descrito en este informe se implementó en un único
+    cuaderno de Google Colab titulado \textit{Predicción del puntaje global de la
+    prueba Saber 11 a partir de variables socioeconómicas y del colegio}, que se
+    conserva también en el repositorio del proyecto como
+    \texttt{notebooks/01\_planteamiento\_y\_eda.ipynb}. Los segmentos de código
+    reproducidos en las secciones de metodología y resultados corresponden, uno a
+    uno y en el mismo orden, a las celdas de ese cuaderno, y cada uno tiene su
+    archivo espejo en \texttt{utils/codes/}.
+
+    \vspace{10pt}
+
+    \begin{tcolorbox}[
+        colback=green!7!white,
+        colframe=green!55!black,
+        boxrule=1.2pt,
+        arc=3mm,
+        fonttitle=\bfseries,
+        title=Cuaderno interactivo disponible en Google Colab
+    ]
+        \centering
+
+        \hypersetup{pdfborder={0 0 0}}
+        \urlstyle{same}
+
+        {\color{green!40!black}%
+        \url{https://colab.research.google.com/}}
+
+        \vspace{4pt}
+        {\small (enlace por actualizar al publicar el cuaderno)}
+    \end{tcolorbox}
+
+    \vspace{10pt}
+
+    El cuaderno está organizado en doce secciones que siguen el mismo hilo
+    argumental del informe:
+
+    \vspace{10pt}
+
+    \begin{itemize}
+        \item Planteamiento del problema, pregunta de investigación, objetivos,
+        hipótesis y alcance.
+
+        \item Preparación del entorno e identidad gráfica.
+
+        \item Carga y descripción del conjunto de datos, con el diccionario de
+        variables.
+
+        \item Estructura y calidad de los datos: duplicados, columnas constantes,
+        valores faltantes y conversión de tipos.
+
+        \item La variable objetivo: distribución y verificación de la fórmula del
+        puntaje global.
+
+        \item Variables del estudiante.
+
+        \item Variables del hogar.
+
+        \item Variables del colegio.
+
+        \item Variables geográficas.
+
+        \item Correlaciones y ajuste lineal exploratorio.
+
+        \item Hallazgos y decisiones para la fase 2.
+
+        \item Conclusiones.
+    \end{itemize}
+
+    \vspace{10pt}
+
+    Su ejecución no requiere ninguna instalación ni descarga manual, puesto que el
+    conjunto de datos se obtiene directamente desde el Portal Nacional de Datos
+    Abiertos mediante la API de Socrata con un filtro por periodo, y todas las
+    dependencias vienen preinstaladas en el entorno estándar de Colab. La descarga
+    del periodo 2022-4 (560 MB) toma entre tres y cinco minutos y el resto del
+    cuaderno se ejecuta en menos de cinco. La única fuente de aleatoriedad es el
+    muestreo del ajuste lineal exploratorio, gobernado por la semilla
+    \texttt{RANDOM\_STATE = 42}, de modo que todas las cifras reportadas se
+    reproducen exactamente.

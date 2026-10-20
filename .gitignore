@@ -1,0 +1,46 @@
+# Datos crudos (se descargan desde datos.gov.co con el cuaderno; pesan cientos de MB)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# LaTeX: archivos intermedios generados por la compilación
+*.aux
+*.bbl
+*.blg
+*.brf
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.run.xml
+*.auxlock
+.latexmkrc
+
+# Temporales y editores / SO
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

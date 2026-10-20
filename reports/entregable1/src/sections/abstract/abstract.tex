@@ -1,0 +1,30 @@
+\begin{abstract}
+    Este informe corresponde a la primera fase del Proyecto Integrador de Ciencia
+    de Datos y plantea el problema de predecir el puntaje global de la prueba
+    Saber 11 a partir de variables socioeconómicas del hogar, del colegio y del
+    estudiante, formulado como una tarea de regresión. Se utiliza el conjunto
+    público \textit{Resultados únicos Saber 11} del ICFES, restringido al periodo
+    2022-4, descargado desde el Portal Nacional de Datos Abiertos. El análisis
+    exploratorio revela que la mitad de las 1.065.888 filas descargadas son
+    duplicados exactos, de modo que el conjunto de trabajo queda en 532.792
+    estudiantes, y verifica que el puntaje global es una función determinista de
+    los puntajes por área, que por tanto se excluyen como variables explicativas.
+    La variable objetivo tiene media de 250,1 y desviación de 51,8 puntos, con
+    una distribución casi simétrica. Las asociaciones más fuertes corresponden a
+    la educación de la madre ($\rho = 0{,}35$), la edad ($\rho = -0{,}32$), la
+    educación del padre (0,32) y la tenencia de computador (0,30) e internet
+    (0,28); la jornada del colegio separa 70 puntos entre la completa y la
+    nocturna, los colegios no oficiales superan a los oficiales en 29 puntos y la
+    brecha entre departamentos alcanza 64 puntos entre Bogotá y Chocó. Una
+    regresión lineal exploratoria explica el 24,2\,\% de la varianza con un error
+    absoluto medio de 36,5 puntos, cota que servirá de referencia para las fases
+    de modelado. El informe concluye con doce decisiones de preparación de datos
+    e ingeniería de variables derivadas de los hallazgos.
+\end{abstract}
+
+\vspace{10pt}
+
+\begin{IEEEkeywords}
+    Ciencia de datos, análisis exploratorio de datos, Saber 11, ICFES, regresión,
+    datos abiertos, fuga de información, nivel socioeconómico.
+\end{IEEEkeywords}
