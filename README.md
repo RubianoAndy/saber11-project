@@ -71,6 +71,8 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 │           ├── school_variables.png           # Naturaleza, área, calendario, jornada, carácter...
 │           ├── geography.png                  # Puntaje medio por departamento
 │           └── correlation_matrix.png         # Matriz de correlación de Spearman
+├── docs/
+│   └── plan-computo-colab.md         # Plan de cómputo para las fases 2 y 3 en Colab (tiempos medidos y reglas de diseño)
 ├── data/
 │   ├── raw/                          # Copias locales opcionales (ignorado por git); el cuaderno lee desde Kaggle
 │   └── processed/                    # Conjuntos depurados de la fase 2 (ignorado por git)
@@ -149,6 +151,8 @@ Para cada grupo de variables (estudiante, hogar, colegio, geografía) se calcula
 | Fase | Actividades | Entrega |
 |---|---|---|
 | 2 · Preparación y modelo base | Limpieza, codificación, variables derivadas, partición entrenamiento/validación/prueba y regresión lineal regularizada como *baseline* | 15 nov. 2026 |
+
+Las decisiones de cómputo de las fases 2 y 3 (partición fija, dos representaciones de las variables, búsqueda de hiperparámetros sobre una muestra, interpretabilidad sobre 5.000 filas, artefactos guardados con `joblib`) están en [`docs/plan-computo-colab.md`](docs/plan-computo-colab.md), con tiempos medidos en 2 núcleos.
 | 3 · Modelado avanzado y evaluación | Al menos dos modelos adicionales (p. ej. *Random Forest* y *Gradient Boosting*), validación cruzada, MAE/RMSE/R², importancia de variables y análisis de errores | 22 nov. 2026 |
 | 4 · Comunicación y entrega final | Visualizaciones, informe técnico final, sustentación y repositorio reproducible | 28 nov. 2026 |
 
