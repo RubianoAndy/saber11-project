@@ -13,6 +13,7 @@
 
     \subsection{Entorno de trabajo y reproducibilidad}
         El cuaderno utiliza únicamente librerías preinstaladas en Colab,
+        \textit{kagglehub} para descargar el conjunto de datos,
         \textit{pandas} para la carga y agregación de datos
         \cite{mckinney2010pandas}, \textit{matplotlib} y \textit{seaborn} para las
         figuras \cite{hunter2007matplotlib}, \cite{waskom2021seaborn},
@@ -38,16 +39,19 @@
         \lstinputlisting{\repo utils/codes/graphic-identity/graphic-identity.py}
 
     \subsection{Descarga y carga del conjunto}
-        El Portal Nacional de Datos Abiertos expone el conjunto a través de la API
-        de Socrata, que admite filtros en la URL. En lugar de descargar los 7,1
-        millones de registros de todos los periodos, se solicita únicamente el
-        periodo 2022-4 con un límite superior al número esperado de filas y un
-        orden fijo por identificador, de modo que la descarga sea determinista. El
-        archivo se guarda en \texttt{data/raw/} y, si ya existe, se reutiliza.
-        Como todas las columnas llegan como texto, las categóricas se leen
-        directamente como \texttt{category}, los puntajes como \texttt{float32} y
-        los identificadores como cadena, lo que reduce la memoria del conjunto a
-        una fracción del tamaño del archivo.
+        El periodo 2022-4 se extrajo del Portal Nacional de Datos Abiertos
+        mediante su API, con un filtro por periodo y un orden fijo por
+        identificador, y se publicó en Kaggle como el dataset \textit{Saber 11
+        Colombia - Resultados 2022-4} \cite{rubiano2026kaggle}, con la misma
+        licencia y atribución al ICFES. La copia conserva todas las filas y
+        columnas tal como las entrega el portal; el único cambio es el formato,
+        de CSV (560 MB) a Parquet (31,5 MB), que además guarda el tipo de cada
+        columna: las categóricas como \texttt{category}, los puntajes como
+        \texttt{float32} y los identificadores como cadena. Publicar una copia
+        congelada hace el análisis reproducible aunque el portal actualice sus
+        datos, y reduce la carga del cuaderno a unos segundos. La celda descarga
+        únicamente el archivo Parquet con \textit{kagglehub}, que no requiere
+        cuenta de Kaggle para un dataset público, y lo lee con \textit{pandas}.
 
         \vspace{10pt}
 

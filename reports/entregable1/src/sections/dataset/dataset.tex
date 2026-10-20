@@ -8,15 +8,22 @@
         atribución \cite{icfes2023resultados}. Reúne 7,1 millones de registros
         anónimos de las aplicaciones realizadas entre 2010 y 2022, uno por
         estudiante y periodo, con 51 columnas, y su última actualización data de
-        agosto de 2023. El portal expone los datos mediante la API de Socrata, lo
-        que permite descargar un periodo específico con un filtro en la URL sin
-        necesidad de registro.
+        agosto de 2023.
+
+        \vspace{10pt}
+
+        Para este proyecto se extrajo el periodo seleccionado y se publicó en
+        Kaggle como una copia congelada en formato Parquet
+        \cite{rubiano2026kaggle}, redistribuida con la misma licencia, como lo
+        exige CC BY-SA 4.0. Es la fuente que consume el cuaderno; no modifica
+        ningún valor respecto del portal.
 
     \subsection{Periodo seleccionado y tamaño}
         Se trabaja con el periodo 2022-4, correspondiente a la aplicación del
         calendario A del segundo semestre de 2022, que es la que presenta la gran
         mayoría de colegios del país y el periodo más reciente y numeroso del
-        conjunto. La descarga pesa 560 MB y contiene 1.065.888 filas; como se
+        conjunto. Contiene 1.065.888 filas, que ocupan 560 MB en CSV y 31,5 MB en
+        Parquet; como se
         muestra en la Sección~V, la mitad de ellas son duplicados exactos y el
         conjunto de trabajo queda en 532.792 estudiantes. La Tabla~\ref{dataset_summary}
         resume sus características.
@@ -29,15 +36,17 @@
                 \toprule
                 \textbf{Aspecto} & \textbf{Valor} \\
                 \midrule
-                Fuente & datos.gov.co, conjunto \texttt{kgxf-xxbe} \\
+                Fuente original & datos.gov.co, conjunto \texttt{kgxf-xxbe} \\
+                Copia utilizada & Kaggle, \texttt{andyrubiano/saber-11-} \\
+                & \texttt{resultados-2022-4} \\
                 Publicador & ICFES \\
                 Licencia & CC BY-SA 4.0 \\
                 Periodo & 2022-4 (calendario A, segundo semestre) \\
-                Filas descargadas & 1.065.888 \\
+                Filas publicadas & 1.065.888 \\
                 Filas únicas & 532.792 \\
                 Columnas & 51 \\
                 Variable objetivo & \texttt{punt\_global} (0 a 500) \\
-                Tamaño en disco & 560 MB (CSV) \\
+                Tamaño en disco & 31,5 MB (Parquet); 560 MB en CSV \\
                 Tamaño en memoria & 131 MB (tipos categóricos) \\
                 \bottomrule
             \end{tabular}

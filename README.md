@@ -57,7 +57,7 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 .
 ├── README.md                         # Este archivo
 ├── requirements.txt                  # Dependencias de Python para ejecución local
-├── .gitignore                        # Excluye data/raw (560 MB) y artefactos de LaTeX
+├── .gitignore                        # Excluye .venv/, data/ y artefactos de LaTeX
 ├── assets/
 │   └── images/
 │       ├── Logo.png                  # Logo institucional
@@ -72,7 +72,7 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 │           ├── geography.png                  # Puntaje medio por departamento
 │           └── correlation_matrix.png         # Matriz de correlación de Spearman
 ├── data/
-│   ├── raw/                          # CSV descargado desde datos.gov.co (ignorado por git)
+│   ├── raw/                          # Copias locales opcionales (ignorado por git); el cuaderno lee desde Kaggle
 │   └── processed/                    # Conjuntos depurados de la fase 2 (ignorado por git)
 ├── notebooks/
 │   └── 01_planteamiento_y_eda.ipynb  # Entregable 1: planteamiento, descripción del dataset y EDA
@@ -88,7 +88,7 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
     ├── codes/                        # Un archivo .py por cada celda de código del cuaderno (citados vía \lstinputlisting)
     │   ├── environment-setup/                 # Importaciones y resolución de rutas del proyecto
     │   ├── graphic-identity/                  # Paleta, estilo de figuras, semilla y save_fig
-    │   ├── dataset-download/                  # Descarga del periodo 2022-4 por la API de Socrata y lectura tipada
+    │   ├── dataset-download/                  # Descarga del Parquet desde Kaggle con kagglehub
     │   ├── dataset-structure/                 # Tipo, nulos, cardinalidad y ejemplo por columna
     │   ├── data-quality/                      # Duplicados, columnas constantes y cardinalidad
     │   ├── missing-values/                    # Faltantes por columna y análisis del cuestionario
@@ -115,11 +115,15 @@ El desarrollo de cada fase se realiza en un **cuaderno de Google Colab**, numera
 
 ### Fase 1 · Conjunto de datos
 
-Se utiliza el conjunto **Resultados únicos Saber 11**, publicado por el ICFES en el Portal Nacional de Datos Abiertos ([datos.gov.co/d/kgxf-xxbe](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)) bajo licencia **CC BY-SA 4.0**. Reúne 7,1 millones de registros de las aplicaciones entre 2010 y 2022 con 51 columnas. Se trabaja con el periodo **2022-4** (calendario A del segundo semestre de 2022), descargado con un filtro en la API de Socrata.
+Se utiliza el conjunto **Resultados únicos Saber 11**, publicado por el ICFES en el Portal Nacional de Datos Abiertos ([datos.gov.co/d/kgxf-xxbe](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)) bajo licencia **CC BY-SA 4.0**. Reúne 7,1 millones de registros de las aplicaciones entre 2010 y 2022 con 51 columnas. Se trabaja con el periodo **2022-4** (calendario A del segundo semestre de 2022).
+
+Ese periodo se extrajo del portal mediante su API y se publicó en Kaggle como una **copia congelada en formato Parquet**: [`andyrubiano/saber-11-resultados-2022-4`](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4). La copia conserva todas las filas y columnas sin modificar ningún valor y se redistribuye con la misma licencia y atribución al ICFES. Es la única fuente que consume el cuaderno, de modo que el análisis es reproducible aunque el portal actualice sus datos.
 
 | Aspecto | Valor |
 |---|---|
-| Archivo | `data/raw/saber11_20224.csv` (560 MB, 1.065.888 filas descargadas) |
+| Fuente original | ICFES · datos.gov.co, conjunto `kgxf-xxbe`, periodo 2022-4 |
+| Copia utilizada | Kaggle · `andyrubiano/saber-11-resultados-2022-4` · `saber11_20224.parquet` (31,5 MB; 560 MB en CSV) |
+| Filas publicadas | 1.065.888 |
 | Filas únicas | **532.792** estudiantes (la mitad de las filas del portal son duplicados exactos) |
 | Columnas | 51: identificación (5), colegio `cole_*` (17), estudiante `estu_*` (13), hogar `fami_*` (9), resultados (7) |
 | Variable objetivo | `punt_global` — puntaje global de la prueba (0 a 500) |
@@ -214,23 +218,36 @@ Eliminar duplicados antes de particionar · excluir los puntajes por área · co
 
 ### Para ejecutar el cuaderno
 
-> ℹ️ **No requiere instalación en Google Colab.** El conjunto de datos se descarga desde datos.gov.co mediante la API de Socrata (560 MB, entre tres y cinco minutos) y todas las dependencias vienen preinstaladas. La ejecución completa toma menos de diez minutos, la mayor parte en la descarga.
+> ℹ️ **No requiere instalación en Google Colab.** El conjunto de datos se descarga desde Kaggle con `kagglehub`, sin necesidad de cuenta, en unos segundos, y todas las dependencias vienen preinstaladas. La ejecución completa toma menos de cinco minutos.
 
-Para ejecutarlo localmente desde la raíz del repositorio:
+Para ejecutarlo localmente se usa un entorno virtual con Python 3.14. Desde Git Bash, en la raíz del repositorio:
+
+```bash
+py -3.14 -m venv .venv
+```
+
+```bash
+source .venv/Scripts/activate
+```
 
 ```bash
 pip install -r requirements.txt
 ```
 
 ```bash
-jupyter nbconvert --to notebook --execute --inplace notebooks/01_planteamiento_y_eda.ipynb
+python -m ipykernel install --sys-prefix --name python3 --display-name "Python 3"
 ```
 
-El cuaderno detecta la raíz del repositorio, guarda el CSV en `data/raw/` (y lo reutiliza si ya existe) y escribe las figuras en `assets/images/data/`.
+```bash
+JUPYTER_PATH="$PWD/.venv/share/jupyter" jupyter nbconvert --to notebook --execute --inplace notebooks/01_planteamiento_y_eda.ipynb
+```
+
+El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyter, y `JUPYTER_PATH` hace que Jupyter lo prefiera sobre el Python del sistema. Así el cuaderno conserva el kernel estándar que espera Colab. En VS Code basta con seleccionar `.venv` como kernel. El cuaderno detecta la raíz del repositorio, descarga el Parquet a la caché de `kagglehub` y escribe las figuras en `assets/images/data/`.
 
 | Etapa | Dependencias |
 |---|---|
-| Carga y agregación | `pandas`, `numpy` |
+| Descarga de datos | `kagglehub` |
+| Carga y agregación | `pandas`, `numpy`, `pyarrow` |
 | Visualización | `matplotlib`, `seaborn` |
 | Correlaciones | `scipy` |
 | Ajuste exploratorio | `scikit-learn` |
@@ -329,7 +346,8 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 ## 🔗 Recursos
 
 - [Dataset — Resultados únicos Saber 11 (datos.gov.co)](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)
-- [API de Socrata del conjunto (CSV)](https://www.datos.gov.co/resource/kgxf-xxbe.csv)
+- [Dataset utilizado — Saber 11 Colombia - Resultados 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)
+- [kagglehub](https://github.com/Kaggle/kagglehub)
 - [ICFES — Prueba Saber 11](https://www.icfes.gov.co/evaluaciones-icfes/saber-11/)
 - [DataIcfes — repositorio de bases de datos del ICFES](https://www.icfes.gov.co/data-icfes/)
 - [pandas — User Guide](https://pandas.pydata.org/docs/user_guide/index.html)

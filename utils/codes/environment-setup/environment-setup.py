@@ -28,10 +28,8 @@ def find_project_root(start=Path.cwd()):
     return start
 
 PROJECT_ROOT = Path("/content/saber11-project") if IN_COLAB else find_project_root()
-DATA_RAW = PROJECT_ROOT / "data" / "raw"
 FIG_DIR = PROJECT_ROOT / "assets" / "images" / "data"
-for folder in (DATA_RAW, FIG_DIR):
-    folder.mkdir(parents=True, exist_ok=True)
+FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 print(f"Entorno        : {'Google Colab' if IN_COLAB else 'local'}")
 print(f"Raíz del proyecto: {PROJECT_ROOT}")

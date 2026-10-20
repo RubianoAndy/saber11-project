@@ -70,11 +70,11 @@
     \vspace{10pt}
 
     Su ejecución no requiere ninguna instalación ni descarga manual, puesto que el
-    conjunto de datos se obtiene directamente desde el Portal Nacional de Datos
-    Abiertos mediante la API de Socrata con un filtro por periodo, y todas las
-    dependencias vienen preinstaladas en el entorno estándar de Colab. La descarga
-    del periodo 2022-4 (560 MB) toma entre tres y cinco minutos y el resto del
-    cuaderno se ejecuta en menos de cinco. La única fuente de aleatoriedad es el
+    conjunto de datos se obtiene con \textit{kagglehub} desde la copia pública
+    publicada en Kaggle \cite{rubiano2026kaggle}, sin necesidad de cuenta, y todas
+    las dependencias vienen preinstaladas en el entorno estándar de Colab. La
+    descarga del archivo Parquet de 31,5 MB toma unos segundos y el cuaderno
+    completo se ejecuta en menos de cinco minutos. La única fuente de aleatoriedad es el
     muestreo del ajuste lineal exploratorio, gobernado por la semilla
     \texttt{RANDOM\_STATE = 42}, de modo que todas las cifras reportadas se
     reproducen exactamente.
