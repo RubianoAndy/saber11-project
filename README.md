@@ -20,7 +20,7 @@
 | **Universidad** | Universidad de La Salle |
 | **Líneas de Trabajo** | Análisis Exploratorio de Datos, Aprendizaje Supervisado (Regresión) e Interpretabilidad |
 | **Año** | 2026 |
-| **Estado** | En desarrollo · Entregable 1 completado |
+| **Estado** | Cuadernos de las cuatro fases completados · Informe final y sustentación pendientes |
 
 ---
 
@@ -70,14 +70,21 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 │           ├── family_binary.png              # Bienes del hogar, personas y cuartos
 │           ├── school_variables.png           # Naturaleza, área, calendario, jornada, carácter...
 │           ├── geography.png                  # Puntaje medio por departamento
-│           └── correlation_matrix.png         # Matriz de correlación de Spearman
+│           ├── correlation_matrix.png         # Matriz de correlación de Spearman
+│           ├── split_check.png, baseline_*.png           # Fase 2: partición y diagnóstico de Ridge
+│           ├── model_comparison.png, permutation_importance.png, shap_beeswarm.png, partial_dependence.png, error_analysis.png  # Fase 3
+│           └── story_1_gaps.png … story_5_errors.png     # Fase 4: las cinco figuras de la narrativa
 ├── docs/
 │   └── plan-computo-colab.md         # Plan de cómputo para las fases 2 y 3 en Colab (tiempos medidos y reglas de diseño)
 ├── data/
 │   ├── raw/                          # Copias locales opcionales (ignorado por git); el cuaderno lee desde Kaggle
-│   └── processed/                    # Conjuntos depurados de la fase 2 (ignorado por git)
+│   └── processed/                    # Conjunto limpio, partición, métricas, predicciones e importancias (ignorado por git)
+├── models/                           # Preprocesadores y modelos entrenados con joblib (ignorado por git)
 ├── notebooks/
-│   └── 01_planteamiento_y_eda.ipynb  # Entregable 1: planteamiento, descripción del dataset y EDA
+│   ├── 01_planteamiento_y_eda.ipynb          # Fase 1: planteamiento, descripción del dataset y EDA
+│   ├── 02_preparacion_y_baseline.ipynb       # Fase 2: limpieza, variables derivadas, partición y Ridge de referencia
+│   ├── 03_modelos_y_evaluacion.ipynb         # Fase 3: boosting y random forest, búsqueda de hiperparámetros, SHAP, errores
+│   └── 04_visualizaciones_y_narrativa.ipynb  # Fase 4: figuras finales, resumen y guion de la sustentación
 ├── reports/
 │   └── entregable1/                  # Informe IEEE del Entregable 1
 │       ├── main.tex                  # Documento principal (preámbulo + \input de secciones)
@@ -107,7 +114,10 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
     │   ├── school-crosstab/                   # Cruce naturaleza × área
     │   ├── geography/                         # Puntaje medio por departamento
     │   ├── correlations/                      # Codificación ordinal y matriz de Spearman
-    │   └── exploratory-fit/                   # Regresión lineal exploratoria
+    │   ├── exploratory-fit/                   # Regresión lineal exploratoria
+    │   ├── f2-*/                              # 14 segmentos del cuaderno 02 (limpieza, variables, partición, preprocesadores, Ridge)
+    │   ├── f3-*/                              # 15 segmentos del cuaderno 03 (búsquedas, modelos finales, comparación, interpretación, errores)
+    │   └── f4-*/                              # 9 segmentos del cuaderno 04 (artefactos, cinco figuras de la narrativa, resumen)
     └── references/
 ```
 
@@ -148,15 +158,33 @@ Ese periodo se extrajo del portal mediante su API y se publicó en Kaggle como u
 
 Para cada grupo de variables (estudiante, hogar, colegio, geografía) se calcula tamaño, media, mediana y desviación del puntaje por categoría y se grafica con diagramas de caja sin valores atípicos. Las variables ordinales se codifican con enteros que respetan su orden y se calcula la **correlación de Spearman**; una **regresión lineal exploratoria** (200.000 filas, partición 80/20, semilla 42) da una cota de la varianza explicable de forma aditiva.
 
-### Fases 2 a 4 (pendientes)
+### Fase 2 · Preparación y modelo de referencia (`02_preparacion_y_baseline.ipynb`)
 
-| Fase | Actividades | Entrega |
-|---|---|---|
-| 2 · Preparación y modelo base | Limpieza, codificación, variables derivadas, partición entrenamiento/validación/prueba y regresión lineal regularizada como *baseline* | 15 nov. 2026 |
+Implementa las doce decisiones de la fase 1: deduplicación antes de particionar, exclusión de los puntajes por área, faltantes del cuestionario como categoría *No respondió* más un indicador, edad y extraedad, educación de los padres como ordinal 0 a 9 con indicador de desconocido, *personas por cuarto*, estrato y variables del colegio como nominales, interacción naturaleza × área y municipio codificado por objetivo. Los valores atípicos del puntaje (696, 0,13 %) se conservan por ser reales.
 
-Las decisiones de cómputo de las fases 2 y 3 (partición fija, dos representaciones de las variables, búsqueda de hiperparámetros sobre una muestra, interpretabilidad sobre 5.000 filas, artefactos guardados con `joblib`) están en [`docs/plan-computo-colab.md`](docs/plan-computo-colab.md), con tiempos medidos en 2 núcleos.
-| 3 · Modelado avanzado y evaluación | Al menos dos modelos adicionales (p. ej. *Random Forest* y *Gradient Boosting*), validación cruzada, MAE/RMSE/R², importancia de variables y análisis de errores | 22 nov. 2026 |
-| 4 · Comunicación y entrega final | Visualizaciones, informe técnico final, sustentación y repositorio reproducible | 28 nov. 2026 |
+| Aspecto | Valor |
+|---|---|
+| Conjunto de trabajo | 532.792 estudiantes × 27 variables explicativas |
+| Partición | 70 / 15 / 15 estratificada por deciles (372.954 / 79.919 / 79.919), semilla 42, sin solapamiento |
+| Representaciones | `prep_lineal` (106 columnas *one-hot* + numéricas estandarizadas + municipio por objetivo) y `prep_arboles` (27 columnas, 17 categóricas) |
+| Modelo de referencia | Ridge (`alpha` = 0,01 por validación cruzada): **MAE 34,15 · RMSE 42,17 · R² 0,338** en prueba |
+
+### Fase 3 · Modelos avanzados y evaluación (`03_modelos_y_evaluacion.ipynb`)
+
+Búsqueda aleatoria con 3 pliegues sobre 100.000 filas (16 combinaciones para el boosting, 8 para el *random forest*), reentrenamiento final con todo el entrenamiento y una sola evaluación en prueba. Interpretación sobre 5.000 filas de prueba con importancia por permutación, SHAP y dependencia parcial; análisis de errores por tramo, grupo y departamento.
+
+| Modelo | MAE | RMSE | R² | Sobreajuste (MAE train − test) |
+|---|---|---|---|---|
+| Media (ingenuo) | 42,95 | 51,80 | 0,000 | — |
+| Ridge (referencia) | 34,15 | 42,17 | 0,338 | −0,05 |
+| **Gradient boosting** (15 hojas, 400 iteraciones, L2 = 5) | **32,27** | **40,10** | **0,401** | −0,37 |
+| Random forest (200 árboles, profundidad 20) | 32,95 | 40,91 | 0,376 | −2,74 |
+
+> ⚠️ **`TreeExplainer` de SHAP no soporta las divisiones categóricas de `HistGradientBoostingRegressor`:** produce atribuciones con 38,5 puntos de error de aditividad y señala variables irrelevantes como principales. El cuaderno lo verifica y usa el explicador por permutación (error 0,000), cuyo ranking coincide con la importancia por permutación. La dependencia parcial usa `method="brute"` por la misma razón.
+
+### Fase 4 · Visualizaciones y narrativa (`04_visualizaciones_y_narrativa.ipynb`)
+
+Cinco figuras finales, una por acto de la narrativa (la desigualdad, su geografía, cuánto se predice, qué pesa, para quién falla), la tabla resumen `data/processed/resumen_final.csv` y un guion de diez mensajes para la sustentación. Si se abre en una sesión nueva de Colab sin los artefactos, reconstruye los mínimos desde Kaggle con los hiperparámetros de la fase 3.
 
 ---
 
@@ -218,13 +246,36 @@ Ninguna variable aislada correlaciona más de 0,35 con el puntaje, frente a 0,91
 
 Eliminar duplicados antes de particionar · excluir los puntajes por área · conservar los faltantes como categoría *no respondió* con indicador de cuestionario incompleto · descartar constantes, identificadores, nombres y columnas de residencia/presentación · educación de los padres como ordinal 0 a 9 · estrato como nominal o agrupado · crear *personas por cuarto* e *indicador de extraedad* · interacción naturaleza × área · departamento con *one-hot* o codificación por objetivo suavizada · regresión lineal regularizada como *baseline*.
 
+
+### Entregables 2 a 4 · Resultados principales
+
+| Hallazgo | Cifra |
+|---|---|
+| Mejor modelo en prueba | Gradient boosting: MAE 32,27, R² 0,401 (−25 % de error frente a predecir la media, −5,5 % frente a Ridge) |
+| Variables más importantes (permutación y SHAP coinciden) | Municipio del colegio, edad, jornada, educación de la madre, género, educación del padre, departamento |
+| Peso de cada bloque (suma de \|SHAP\|) | Hogar 38 % · Estudiante 21 % · Colegio 21 % · Geografía 20 % |
+| Formas no lineales | Educación de la madre con escalones desiguales (239 → 263); caída de 40 puntos entre los 16 y los 22 años; hacinamiento en U; jornada nocturna 36 puntos por debajo de la completa a igual edad |
+| Límite del modelo | Comprime los extremos: al decil más alto le predice 287 cuando obtiene 344; de 2.492 sobresalientes (≥ 350) anticipa 77, y a los de colegios oficiales los subestima en 85 puntos |
+| Precisión | 45,8 % de los estudiantes a ≤ 25 puntos de su puntaje real; 78,5 % a ≤ 50 |
+
+<div align="center">
+    <img src="assets/images/data/story_4_importance.png" width="100%" alt="Importancia de variables y peso por bloque">
+</div>
+
+<p align="center"><em>Dos métodos independientes coinciden en el ranking; el hogar en conjunto aporta el doble que cualquier otro bloque.</em></p>
+
+<div align="center">
+    <img src="assets/images/data/story_5_errors.png" width="100%" alt="Error por tramo y sobresalientes que el contexto no anticipa">
+</div>
+
+<p align="center"><em>El modelo describe desigualdades estructurales; no anticipa al talento que surge donde menos se espera, y por eso no debe usarse para decidir sobre estudiantes individuales.</em></p>
 ---
 
 ## ⚙️ Requisitos
 
 ### Para ejecutar el cuaderno
 
-> ℹ️ **No requiere instalación en Google Colab.** El conjunto de datos se descarga desde Kaggle con `kagglehub`, sin necesidad de cuenta, en unos segundos, y todas las dependencias vienen preinstaladas. La ejecución completa toma menos de cinco minutos.
+> ℹ️ **No requiere instalación en Google Colab.** El conjunto de datos se descarga desde Kaggle con `kagglehub`, sin necesidad de cuenta, en unos segundos, y todas las dependencias vienen preinstaladas. El cuaderno 01 corre en menos de cinco minutos, el 02 en menos de tres y el 04 en menos de dos; el 03 (búsquedas, *random forest* y SHAP) tarda entre 10 y 25 minutos en Colab y unos 4 en un equipo de 16 núcleos. Cada cuaderno se ejecuta de forma independiente: el 03 y el 04 reconstruyen los artefactos de las fases anteriores desde Kaggle si no los encuentran.
 
 Para ejecutarlo localmente se usa un entorno virtual con Python 3.14. Desde Git Bash, en la raíz del repositorio:
 
@@ -245,7 +296,7 @@ python -m ipykernel install --sys-prefix --name python3 --display-name "Python 3
 ```
 
 ```bash
-JUPYTER_PATH="$PWD/.venv/share/jupyter" jupyter nbconvert --to notebook --execute --inplace notebooks/01_planteamiento_y_eda.ipynb
+for nb in notebooks/0*.ipynb; do JUPYTER_PATH="$PWD/.venv/share/jupyter" jupyter nbconvert --to notebook --execute --inplace "$nb"; done
 ```
 
 El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyter, y `JUPYTER_PATH` hace que Jupyter lo prefiera sobre el Python del sistema. Así el cuaderno conserva el kernel estándar que espera Colab. En VS Code basta con seleccionar `.venv` como kernel. El cuaderno detecta la raíz del repositorio, descarga el Parquet a la caché de `kagglehub` y escribe las figuras en `assets/images/data/`.
@@ -256,7 +307,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 | Carga y agregación | `pandas`, `numpy`, `pyarrow` |
 | Visualización | `matplotlib`, `seaborn` |
 | Correlaciones | `scipy` |
-| Ajuste exploratorio | `scikit-learn` |
+| Modelos, búsqueda e interpretación | `scikit-learn`, `shap`, `joblib` |
 
 ### Para compilar el informe LaTeX
 
@@ -321,11 +372,25 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 - ✅ **Informe IEEE** de 18 páginas, con 8 figuras, 7 tablas, 2 ecuaciones y 14 referencias, compilado sin referencias sin resolver
 - ✅ 17 archivos Python en `utils/codes/`, uno por celda, todos citados desde el informe
 
+### ✅ Entregable 2 · Preparación y modelo base (15 nov. 2026)
+
+- ✅ **Cuaderno** `02_preparacion_y_baseline.ipynb` (14 celdas de código, 29 de narrativa), ejecutado de principio a fin: limpieza, variables derivadas, partición estratificada, dos preprocesadores y Ridge de referencia con MAE 34,15 y R² 0,338 en prueba
+- ✅ Artefactos en `data/processed/` (`saber11_fase2.parquet`, `particion.parquet`, `columnas.json`, `cat_mask.json`, `metricas_fase2.csv`, `predicciones_fase2.parquet`) y `models/` (`prep_lineal`, `prep_arboles`, `baseline_ridge`)
+
+### ✅ Entregable 3 · Modelado avanzado y evaluación (22 nov. 2026)
+
+- ✅ **Cuaderno** `03_modelos_y_evaluacion.ipynb` (15 celdas de código, 29 de narrativa), ejecutado de principio a fin: búsquedas aleatorias, boosting y *random forest* finales, comparación de cuatro modelos, permutación, SHAP verificado por aditividad, dependencia parcial y análisis de errores
+- ✅ Artefactos: `busqueda_hgb.csv`, `busqueda_rf.csv`, `metricas_fase3.csv`, `predicciones_fase3.parquet`, `importancias.csv`, `shap_importancia.csv`, `models/hgb.joblib`, `models/rf.joblib`
+
+### ✅ Entregable 4 · Visualizaciones y narrativa (actividad 7)
+
+- ✅ **Cuaderno** `04_visualizaciones_y_narrativa.ipynb` (9 celdas de código, 19 de narrativa): cinco figuras finales, tabla `resumen_final.csv` y guion de diez mensajes para la sustentación
+
 ### ⏳ Pendiente
 
-- ⏳ **Entregable 2** — limpieza, ingeniería de variables, partición y modelo base (15 nov. 2026)
-- ⏳ **Entregable 3** — modelos comparados, hiperparámetros, métricas e interpretabilidad (22 nov. 2026)
-- ⏳ **Entregable 4** — visualizaciones, informe técnico final y sustentación (28 nov. 2026)
+- ⏳ **Informe técnico final** (actividad 8, 27 nov. 2026)
+- ⏳ **Sustentación** (actividad 9, 28 nov. 2026)
+- ⏳ Publicar los cuadernos 02, 03 y 04 en Google Colab y verificar la celda de control de tiempo allí
 
 ---
 
@@ -344,7 +409,7 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 
 ## 🔑 Palabras Clave
 
-`Ciencia de Datos` · `Análisis Exploratorio de Datos` · `Saber 11` · `ICFES` · `Regresión` · `Datos Abiertos` · `Fuga de Información` · `Nivel Socioeconómico` · `pandas` · `seaborn` · `scikit-learn`
+`Ciencia de Datos` · `Análisis Exploratorio de Datos` · `Saber 11` · `ICFES` · `Regresión` · `Gradient Boosting` · `Random Forest` · `SHAP` · `Interpretabilidad` · `Datos Abiertos` · `Fuga de Información` · `Nivel Socioeconómico` · `pandas` · `seaborn` · `scikit-learn`
 
 ---
 
