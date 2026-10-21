@@ -32,23 +32,32 @@
             \centering
             \caption{Resumen del conjunto de datos}
             \label{dataset_summary}
-            \begin{tabular}{ll}
-                \toprule
+            \begin{tabular}{|l|L{5.4cm}|}
+                \hline
                 \textbf{Aspecto} & \textbf{Valor} \\
-                \midrule
+                \hline
                 Fuente original & datos.gov.co, conjunto \texttt{kgxf-xxbe} \\
-                Copia utilizada & Kaggle, \texttt{andyrubiano/saber-11-} \\
-                & \texttt{resultados-2022-4} \\
+                \hline
+                Copia utilizada & Kaggle, \texttt{andyrubiano/\allowbreak saber-11-\allowbreak resultados-2022-4} \\
+                \hline
                 Publicador & ICFES \\
+                \hline
                 Licencia & CC BY-SA 4.0 \\
+                \hline
                 Periodo & 2022-4 (calendario A, segundo semestre) \\
+                \hline
                 Filas publicadas & 1.065.888 \\
+                \hline
                 Filas únicas & 532.792 \\
+                \hline
                 Columnas & 51 \\
+                \hline
                 Variable objetivo & \texttt{punt\_global} (0 a 500) \\
+                \hline
                 Tamaño en disco & 31,5 MB (Parquet); 560 MB en CSV \\
+                \hline
                 Tamaño en memoria & 131 MB (tipos categóricos) \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 
@@ -62,30 +71,34 @@
             \centering
             \caption{Bloques de variables del conjunto}
             \label{variables}
-            \begin{tabular}{L{2.3cm}L{5.4cm}}
-                \toprule
+            \begin{tabular}{|L{2.3cm}|L{5.4cm}|}
+                \hline
                 \textbf{Bloque} & \textbf{Contenido} \\
-                \midrule
+                \hline
                 Identificación (5) & Periodo, identificador anónimo
                 (\texttt{estu\_consecutivo}), tipo de documento, condición del
                 evaluado y estado del resultado. \\
+                \hline
                 Colegio, \texttt{cole\_*} (17) & Códigos DANE e ICFES, nombres
                 del establecimiento y la sede, naturaleza (oficial o no oficial),
                 área (urbana o rural), calendario, carácter (académico o técnico),
                 jornada, género de la población, bilingüismo y ubicación
                 (departamento y municipio). \\
+                \hline
                 Estudiante, \texttt{estu\_*} (13) & Género, fecha de nacimiento,
                 nacionalidad, lugar de residencia, lugar de presentación de la
                 prueba y privación de la libertad. \\
+                \hline
                 Hogar, \texttt{fami\_*} (9) & Estrato de la vivienda, máximo
                 nivel educativo de la madre y del padre, personas y cuartos del
                 hogar y tenencia de internet, computador, automóvil y lavadora;
                 provienen del cuestionario que el estudiante diligencia al
                 inscribirse. \\
+                \hline
                 Resultados (7) & Puntaje en lectura crítica, matemáticas,
                 sociales y ciudadanas, ciencias naturales e inglés (0 a 100),
                 nivel de desempeño en inglés y puntaje global (0 a 500). \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 

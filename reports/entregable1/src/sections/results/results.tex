@@ -55,6 +55,7 @@
         transformar la variable y las métricas de error se leen directamente en
         puntos.
 
+        \clearpage
         \begin{strip}
             \centering
             \includegraphics[width=0.98\linewidth]{assets/images/data/target_distribution.png}
@@ -107,26 +108,38 @@
             \centering
             \caption{Puntaje global medio según variables ordinales del hogar}
             \label{family_table}
-            \begin{tabular}{lrr}
-                \toprule
+            \begin{tabular}{|l|r|r|}
+                \hline
                 \textbf{Variable y nivel} & \textbf{$n$} & \textbf{Media} \\
-                \midrule
+                \hline
                 Estrato: Sin estrato & 19.781 & 212,6 \\
+                \hline
                 Estrato 1 & 146.333 & 242,0 \\
+                \hline
                 Estrato 2 & 180.091 & 253,7 \\
+                \hline
                 Estrato 3 & 110.254 & 263,2 \\
+                \hline
                 Estrato 4 & 28.092 & 267,4 \\
+                \hline
                 Estrato 5 & 8.448 & 261,4 \\
+                \hline
                 Estrato 6 & 3.879 & 245,1 \\
-                \midrule
+                \hline
                 Educ. madre: Ninguno & 10.260 & 211,2 \\
+                \hline
                 Primaria completa & 42.124 & 233,4 \\
+                \hline
                 Secundaria completa & 143.736 & 249,4 \\
+                \hline
                 Técnica o tecnológica completa & 52.289 & 268,0 \\
+                \hline
                 Educación profesional completa & 62.318 & 278,4 \\
+                \hline
                 Postgrado & 11.372 & 307,5 \\
+                \hline
                 No sabe & 12.638 & 261,5 \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 
@@ -174,27 +187,36 @@
             \centering
             \caption{Puntaje global medio según variables del colegio}
             \label{school_table}
-            \begin{tabular}{lrr}
-                \toprule
+            \begin{tabular}{|l|r|r|}
+                \hline
                 \textbf{Variable y nivel} & \textbf{$n$} & \textbf{Media} \\
-                \midrule
+                \hline
                 Naturaleza: Oficial & 412.313 & 243,6 \\
+                \hline
                 No oficial & 120.478 & 272,6 \\
-                \midrule
+                \hline
                 Área: Urbano & 441.577 & 254,6 \\
+                \hline
                 Rural & 91.214 & 228,4 \\
-                \midrule
+                \hline
                 Jornada: Completa & 76.897 & 280,8 \\
+                \hline
                 Única & 146.360 & 252,0 \\
+                \hline
                 Mañana & 208.530 & 248,2 \\
+                \hline
                 Tarde & 49.187 & 245,5 \\
+                \hline
                 Sabatina & 28.116 & 212,7 \\
+                \hline
                 Noche & 23.701 & 210,6 \\
-                \midrule
+                \hline
                 Carácter: Académico & 269.918 & 253,9 \\
+                \hline
                 Técnico/académico & 174.947 & 248,9 \\
+                \hline
                 Técnico & 58.697 & 243,3 \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 
@@ -219,14 +241,16 @@
             \centering
             \caption{Puntaje global medio y tamaño según naturaleza y área del colegio}
             \label{crosstab}
-            \begin{tabular}{lrrrr}
-                \toprule
-                & \multicolumn{2}{c}{\textbf{Media}} & \multicolumn{2}{c}{\textbf{$n$}} \\
+            \begin{tabular}{|l|r|r|r|r|}
+                \hline
+                & \multicolumn{2}{c|}{\textbf{Media}} & \multicolumn{2}{c|}{\textbf{$n$}} \\
+                \hline
                 \textbf{Naturaleza} & Rural & Urbano & Rural & Urbano \\
-                \midrule
+                \hline
                 No oficial & 291,1 & 271,7 & 5.328 & 115.150 \\
+                \hline
                 Oficial & 224,5 & 248,6 & 85.886 & 326.427 \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 
@@ -261,25 +285,38 @@
             \centering
             \caption{Correlación de Spearman de las variables candidatas con el puntaje global}
             \label{spearman_table}
-            \begin{tabular}{lr}
-                \toprule
+            \begin{tabular}{|l|r|}
+                \hline
                 \textbf{Variable} & $\boldsymbol{\rho}$ \\
-                \midrule
+                \hline
                 Educación de la madre & 0,35 \\
+                \hline
                 Edad & $-$0,32 \\
+                \hline
                 Educación del padre & 0,32 \\
+                \hline
                 Tiene computador & 0,30 \\
+                \hline
                 Tiene internet & 0,28 \\
+                \hline
                 Colegio no oficial & 0,22 \\
+                \hline
                 Estrato & 0,19 \\
+                \hline
                 Colegio urbano & 0,19 \\
+                \hline
                 Jornada completa o única & 0,19 \\
+                \hline
                 Tiene automóvil & 0,19 \\
+                \hline
                 Tiene lavadora & 0,17 \\
+                \hline
                 Personas en el hogar & $-$0,11 \\
+                \hline
                 Género femenino & $-$0,07 \\
+                \hline
                 Colegio bilingüe, cuartos, calendario B & $|\rho| \le 0{,}01$ \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{table}
 
@@ -316,22 +353,33 @@
             \captionof{table}{Hallazgos del análisis exploratorio y decisiones para la fase 2}
             \label{decisions}
             \small
-            \begin{tabular}{L{7.6cm}L{9.6cm}}
-                \toprule
+            \begin{tabular}{|L{7.6cm}|L{9.6cm}|}
+                \hline
                 \textbf{Hallazgo} & \textbf{Decisión} \\
-                \midrule
+                \hline
                 Cada registro aparece dos veces & Eliminar duplicados antes de particionar. \\
+                \hline
                 El global es función exacta de las áreas & Excluir \texttt{punt\_*} por área y \texttt{desemp\_ingles}. \\
+                \hline
                 La ausencia del cuestionario es informativa (21,5 puntos menos) & Conservar faltantes como categoría \textit{no respondió} e indicador de cuestionario incompleto. \\
+                \hline
                 Columnas constantes, casi constantes, identificadores y nombres & Descartarlas; conservar departamento y municipio del colegio. \\
+                \hline
                 Educación de los padres e internet/computador lideran & Educación como ordinal 0 a 9 con \textit{No sabe} como nivel propio; bienes binarios. \\
+                \hline
                 El estrato se quiebra en 5 y 6 & Probarlo como nominal o agrupar 4 a 6. \\
+                \hline
                 Personas y cuartos en forma de U & Crear personas por cuarto; tratarlas como categóricas. \\
+                \hline
                 La edad marca extraedad & Edad numérica e indicador de extraedad; descartar tipo de documento. \\
+                \hline
                 Jornada, naturaleza y área con interacción & Nominales más interacción naturaleza $\times$ área. \\
+                \hline
                 Indicador bilingüe poco confiable & Descartarlo o conservarlo con \textit{no reportado}. \\
+                \hline
                 Brecha regional con departamentos pequeños & \textit{One-hot} o codificación por objetivo suavizada; municipio solo por objetivo. \\
+                \hline
                 $R^2$ lineal de 0,242 & Referencia: regresión lineal regularizada; meta de la fase 3: superarla con modelos no lineales. \\
-                \bottomrule
+                \hline
             \end{tabular}
         \end{strip}

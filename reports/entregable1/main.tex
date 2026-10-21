@@ -9,7 +9,6 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{float}
-\usepackage{booktabs}
 \usepackage{array}
 \usepackage{cuted}     % entorno strip: bloque a doble columna que no flota
 \usepackage{capt-of}   % \captionof, para rotular dentro de un strip
@@ -29,6 +28,7 @@
 \setlength{\emergencystretch}{2em}
 \renewcommand{\_}{\textunderscore\allowbreak{}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.25}
 
 \newif\ifshowwatermark
 \showwatermarktrue
@@ -111,7 +111,28 @@
     \maketitle
     \thispagestyle{plain}
 
-    \input{src/sections/abstract/abstract.tex}
+    \begin{abstract}
+        Este informe presenta la primera fase de un proyecto de ciencia de datos
+        cuyo objetivo es predecir el puntaje global de la prueba Saber 11 a partir
+        de las condiciones del hogar, del colegio y del estudiante. Se analizan los
+        resultados del periodo 2022-4 publicados por el ICFES, que tras eliminar
+        registros duplicados suman 532.792 estudiantes. El análisis exploratorio
+        muestra que el puntaje, con una media de 250 puntos, se asocia sobre todo
+        con la educación de los padres, el acceso a internet y computador, la
+        jornada y la naturaleza del colegio y la región, con 64 puntos de diferencia
+        entre Bogotá y Chocó y verifica que el puntaje global se calcula a partir 
+        de los puntajes por área, que se excluyen como variables explicativas 
+        para evitar fuga de información. Una regresión lineal exploratoria 
+        explica el 24 \% de la variación del puntaje, cifra que sirve de punto 
+        de partida para los modelos de las siguientes fases.
+    \end{abstract}
+
+    \vspace{10pt}
+
+    \begin{IEEEkeywords}
+        Análisis exploratorio de datos, ciencia de datos, datos abiertos, fuga de 
+        información, ICFES, nivel socioeconómico, regresión, Saber 11.
+    \end{IEEEkeywords}
 
     \input{src/sections/introduction/introduction.tex}
     \input{src/sections/problem/problem.tex}

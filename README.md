@@ -81,7 +81,7 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 ├── reports/
 │   └── entregable1/                  # Informe IEEE del Entregable 1
 │       ├── main.tex                  # Documento principal (preámbulo + \input de secciones)
-│       ├── main.pdf                  # Informe compilado (17 páginas)
+│       ├── main.pdf                  # Informe compilado (18 páginas)
 │       ├── IEEEtran.cls              # Clase LaTeX del formato IEEE conference
 │       ├── utils/
 │       │   └── references/
@@ -318,7 +318,7 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 - ✅ **Análisis exploratorio** — variable objetivo, verificación de la fórmula del puntaje global, estudiante, hogar, colegio, geografía, correlaciones y ajuste lineal exploratorio
 - ✅ **Hallazgos y decisiones** — doce decisiones de preparación e ingeniería de variables para la fase 2
 - ✅ **Cuaderno** `01_planteamiento_y_eda.ipynb` con 17 celdas de código y 35 de narrativa, ejecutado de principio a fin
-- ✅ **Informe IEEE** de 17 páginas, con 8 figuras, 7 tablas, 2 ecuaciones y 14 referencias, compilado sin referencias sin resolver
+- ✅ **Informe IEEE** de 18 páginas, con 8 figuras, 7 tablas, 2 ecuaciones y 14 referencias, compilado sin referencias sin resolver
 - ✅ 17 archivos Python en `utils/codes/`, uno por celda, todos citados desde el informe
 
 ### ⏳ Pendiente
@@ -326,7 +326,6 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 - ⏳ **Entregable 2** — limpieza, ingeniería de variables, partición y modelo base (15 nov. 2026)
 - ⏳ **Entregable 3** — modelos comparados, hiperparámetros, métricas e interpretabilidad (22 nov. 2026)
 - ⏳ **Entregable 4** — visualizaciones, informe técnico final y sustentación (28 nov. 2026)
-- ⏳ Publicar el cuaderno en Google Colab y actualizar el enlace del Apéndice A
 
 ---
 
@@ -339,7 +338,7 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 | Tamaño de página | Carta (8.5" × 11") |
 | Fuente base | 10 pt |
 | Bibliografía | IEEE |
-| Extensión del Entregable 1 | 17 páginas |
+| Extensión del Entregable 1 | 18 páginas |
 
 ---
 
@@ -352,6 +351,7 @@ Nombres descriptivos en `snake_case`, sin prefijo de tipo: tablas `dataset_summa
 ## 🔗 Recursos
 
 - [Dataset — Resultados únicos Saber 11 (datos.gov.co)](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)
+- [Cuaderno del Entregable 1 en Google Colab](https://colab.research.google.com/drive/120GLTvDurcx6kycc91pffk8ilKFocwyq?usp=sharing)
 - [Dataset utilizado — Saber 11 Colombia - Resultados 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)
 - [kagglehub](https://github.com/Kaggle/kagglehub)
 - [ICFES — Prueba Saber 11](https://www.icfes.gov.co/evaluaciones-icfes/saber-11/)
