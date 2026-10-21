@@ -1,36 +1,37 @@
 \section{Conclusiones}
     \begin{itemize}
         \item El conjunto \textit{Resultados únicos Saber 11} del periodo 2022-4
-        es apto para el problema planteado, puesto que es público, con licencia
+        es apto para el problema planteado ya que es público, con licencia
         abierta, tiene una variable objetivo continua y bien comportada (media
-        250,1, desviación 51,8, asimetría 0,28) y reúne, para 532.792
+        250,1, desviación 51,8, asimetría 0,28) y reúne para 532.792
         estudiantes, información del hogar, del colegio y de la geografía que
         existe antes de la prueba.
 
         \item La verificación de calidad fue tan importante como el análisis de
-        las variables, dado que la mitad de las filas descargadas eran duplicados
-        exactos y el puntaje global resultó ser una función determinista de los
-        puntajes por área. Ambos hallazgos, de pasarse por alto, habrían
-        producido métricas de modelado ficticias.
+        las variables, dado que, la mitad de las filas descargadas eran
+        duplicados exactos y el puntaje global resultó ser una función
+        determinista de los puntajes por área. Ambos hallazgos, de pasarse por
+        alto, habrían producido métricas de modelado ficticias.
 
         \item Las tres hipótesis de trabajo reciben respaldo preliminar. El nivel
         socioeconómico del hogar, en particular la educación de los padres y el
         acceso a internet y computador, concentra las asociaciones más altas
-        (H1); las características del colegio, sobre todo la jornada y la
-        naturaleza, aportan brechas propias de 29 a 70 puntos y una interacción
-        con el área (H2); y el departamento del colegio introduce una brecha de
+        (H1), las características del colegio, sobre todo la jornada y la
+        naturaleza aportan brechas propias de 29 a 70 puntos y una interacción
+        con el área (H2) y el departamento del colegio introduce una brecha de
         64 puntos entre Bogotá y Chocó que ninguna variable individual explica
         por sí sola (H3).
 
         \item Ninguna variable aislada correlaciona más de 0,35 con el puntaje y
         una regresión lineal aditiva explica el 24,2\,\% de la varianza con un
         error absoluto medio de 36,5 puntos. Ese es el punto de partida honesto
-        del proyecto: el modelo de referencia de la fase 2 deberá reproducirlo
+        del proyecto, el modelo de referencia de la fase 2 deberá reproducirlo
         con la partición definitiva y los modelos de la fase 3 deberán superarlo
-        capturando las relaciones no lineales y las interacciones identificadas.
+        capturando las relaciones no lineales y las interacciones que el
+        análisis exploratorio dejó identificadas.
 
-        \item Los valores faltantes no son aleatorios, quienes no responden el
-        cuestionario obtienen 21,5 puntos menos, y varias variables ordinales no
+        \item Los valores faltantes no son aleatorios (quienes no responden el
+        cuestionario obtienen 21,5 puntos menos) y varias variables ordinales no
         se comportan como tales (estrato, personas y cuartos del hogar). La
         estrategia de preparación debe conservar esa información en lugar de
         imputarla o descartarla, lo que define el plan de limpieza e ingeniería
