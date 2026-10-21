@@ -3,25 +3,23 @@
     código se reproducen a lo largo de este informe en el mismo orden en que se
     ejecutan, puesto que cada paso depende del anterior, iniciando con la
     preparación del entorno, siguiendo con la descarga y verificación del
-    conjunto, la depuración de duplicados, el tratamiento de los valores faltantes
+    dataset, la depuración de duplicados, el tratamiento de los valores faltantes
     y la conversión de tipos, la caracterización de la variable objetivo y, por
     último, el examen de su relación con cada grupo de variables explicativas. El
-    enfoque sigue la lógica del análisis exploratorio de datos de Tukey, mirar los
-    datos antes de modelarlos para descubrir su estructura y sus anomalías
-    \cite{tukey1977exploratory}, dentro del marco de fases de CRISP-DM
-    \cite{chapman2000crisp}.
+    enfoque sigue la lógica del análisis exploratorio de datos de Tukey, ya que 
+    se tiene como objetivo mirar los datos antes de modelarlos para descubrir 
+    su estructura y sus anomalías dentro del marco de fases de CRISP-DM 
+    \cite{tukey1977exploratory}, \cite{chapman2000crisp}.
 
     \subsection{Entorno de trabajo y reproducibilidad}
         El cuaderno utiliza únicamente librerías preinstaladas en Colab,
-        \textit{kagglehub} para descargar el conjunto de datos,
-        \textit{pandas} para la carga y agregación de datos
-        \cite{mckinney2010pandas}, \textit{matplotlib} y \textit{seaborn} para las
-        figuras \cite{hunter2007matplotlib}, \cite{waskom2021seaborn},
-        \textit{scipy} para la correlación de Spearman y \textit{scikit-learn} para
-        el ajuste lineal exploratorio \cite{pedregosa2011scikit}. Las rutas se
-        resuelven respecto de la raíz del repositorio, de modo que las figuras se
-        guardan en \texttt{assets/images/data/}, que es de donde las toma este
-        informe.
+        \textit{kagglehub} para descargar el dataset, \textit{pandas} 
+        para la carga y agregación de datos, \textit{matplotlib} y 
+        \textit{seaborn} para las figuras, \textit{scipy} para la correlación 
+        de Spearman y \textit{scikit-learn} para el ajuste lineal exploratorio. 
+        Las rutas se resuelven respecto de la raíz del repositorio, de modo 
+        que las figuras se guardan en \texttt{assets/images/data/}, que es de 
+        donde las toma este informe.
 
         \vspace{10pt}
 
@@ -31,7 +29,7 @@
 
         Luego se fija la identidad gráfica, un azul para la variable objetivo y
         las series principales, un naranja para contrastes y un tono neutro para
-        las descripciones del conjunto, y la semilla global \texttt{RANDOM\_STATE
+        las descripciones del conjunto y la semilla global \texttt{RANDOM\_STATE
         = 42}, que gobierna el único muestreo del cuaderno.
 
         \vspace{10pt}
@@ -41,17 +39,17 @@
     \subsection{Descarga y carga del conjunto}
         El periodo 2022-4 se extrajo del Portal Nacional de Datos Abiertos
         mediante su API, con un filtro por periodo y un orden fijo por
-        identificador, y se publicó en Kaggle como el dataset \textit{Saber 11
+        identificador y se publicó en Kaggle como el dataset \textit{Saber 11
         Colombia - Resultados 2022-4} \cite{rubiano2026kaggle}, con la misma
         licencia y atribución al ICFES. La copia conserva todas las filas y
-        columnas tal como las entrega el portal; el único cambio es el formato,
+        columnas tal como las entrega el portal, el único cambio es el formato,
         de CSV (560 MB) a Parquet (31,5 MB), que además guarda el tipo de cada
-        columna: las categóricas como \texttt{category}, los puntajes como
+        columna, las categóricas como \texttt{category}, los puntajes como
         \texttt{float32} y los identificadores como cadena. Publicar una copia
         congelada hace el análisis reproducible aunque el portal actualice sus
-        datos, y reduce la carga del cuaderno a unos segundos. La celda descarga
+        datos y reduce la carga del cuaderno a unos segundos. La celda descarga
         únicamente el archivo Parquet con \textit{kagglehub}, que no requiere
-        cuenta de Kaggle para un dataset público, y lo lee con \textit{pandas}.
+        cuenta de Kaggle para un dataset público y lo lee con \textit{pandas}.
 
         \vspace{10pt}
 
@@ -60,9 +58,8 @@
         \vspace{10pt}
 
         La estructura del conjunto se verifica columna por columna, tipo,
-        cantidad de valores no nulos, porcentaje de faltantes, cardinalidad y un
-        valor de ejemplo, que es la base del diccionario de variables de la
-        Sección~III.
+        cantidad de valores no nulos, porcentaje de faltantes, cardinalidad y 
+        un valor de ejemplo, que es la base del diccionario de variables.
 
         \vspace{10pt}
 
@@ -70,11 +67,11 @@
 
     \subsection{Calidad de los datos}
         Se cuentan los registros duplicados y se comprueba si el identificador
-        \texttt{estu\_consecutivo} es único; los duplicados exactos se eliminan y
-        el resto del análisis se realiza sobre el conjunto depurado. Se
-        identifican además las columnas constantes y las de muy poca variación,
-        que no aportan información a un modelo, y se tabula la cardinalidad de
-        cada variable categórica, que determina su codificación en la fase 2.
+        \texttt{estu\_consecutivo} es único, los duplicados exactos se eliminan 
+        y el resto del análisis se realiza sobre el dataset depurado, adicionalmente, 
+        se identifican las columnas constantes y las de muy poca variación,
+        que no aportan información a un modelo y se tabula la cardinalidad de
+        cada variable categórica.
 
         \vspace{10pt}
 
@@ -84,7 +81,7 @@
 
         Los valores faltantes se cuantifican por columna y se examina si los del
         bloque \texttt{fami\_*} ocurren juntos, lo que indicaría estudiantes que
-        no diligenciaron el cuestionario, o de forma independiente; también se
+        no diligenciaron el cuestionario, o de forma independiente, también se
         compara el puntaje de quienes no tienen cuestionario con el del resto,
         para saber si la ausencia es informativa.
 
@@ -95,8 +92,8 @@
         \vspace{10pt}
 
         Por último se convierte la fecha de nacimiento en la edad al momento de
-        la prueba, tomando como referencia la fecha de aplicación del calendario A
-        de 2022, y se fija el orden natural de las variables ordinales (estrato,
+        la prueba, tomando como referencia la fecha de aplicación del calendario 
+        A de 2022, fijando el orden natural de las variables ordinales (estrato,
         educación de los padres, personas y cuartos del hogar, nivel de inglés),
         que \texttt{category} no conoce por sí misma.
 
@@ -110,23 +107,31 @@
         diagrama de caja. Luego se verifica la fórmula con la que el ICFES
         construye el puntaje global a partir de las cinco pruebas
         \cite{icfes2022guia},
+
+        \vspace{10pt}
+
         \begin{equation}
             \label{global_formula}
-            \begin{aligned}
-                G = \operatorname{round}\Bigl(\tfrac{5}{13}\bigl(
-                    & 3\,LC + 3\,MAT \\
-                    & + 3\,SOC + 3\,CN + 1\,ING \bigr)\Bigr),
-            \end{aligned}
+            \scalebox{1}{$
+                G = \operatorname{round}\!\left(\frac{5\,(3\,LC + 3\,MAT + 3\,SOC + 3\,CN + ING)}{13}\right)
+            $}
         \end{equation}
-        donde $LC$, $MAT$, $SOC$, $CN$ e $ING$ son los puntajes de lectura
-        crítica, matemáticas, sociales y ciudadanas, ciencias naturales e inglés.
-        Si la fórmula se cumple sobre los datos, los puntajes por área son
-        componentes de la respuesta y no variables explicativas, y su inclusión en
-        un modelo constituiría una fuga de información \cite{kaufman2012leakage}.
+
+        \vspace{10pt}
+
+        Donde $LC$, $MAT$, $SOC$, $CN$ e $ING$ son los puntajes de lectura
+        crítica, matemáticas, competencias sociales y ciudadanas, ciencias 
+        naturales e inglés.
 
         \vspace{10pt}
 
         \lstinputlisting{\repo utils/codes/target-distribution/target-distribution.py}
+
+        \vspace{10pt}
+
+        Si la fórmula se cumple sobre los datos, los puntajes por área son 
+        componentes de la respuesta y no variables explicativas y su inclusión 
+        en un modelo constituiría una fuga de información.
 
         \vspace{10pt}
 
@@ -153,7 +158,7 @@
         \vspace{10pt}
 
         Para las variables binarias del hogar se compara la media del puntaje
-        entre quienes tienen y no tienen cada bien, y se reporta la diferencia en
+        entre quienes tienen y no tienen cada bien y se reporta la diferencia en
         puntos.
 
         \vspace{10pt}
@@ -185,18 +190,22 @@
     \subsection{Correlaciones y ajuste lineal exploratorio}
         Las variables ordinales se codifican con enteros que respetan su orden,
         estrato de 0 a 6 y nivel educativo de 0 a 9 (las categorías \textit{No
-        sabe} y \textit{No Aplica} se tratan como faltantes), las binarias con 0 y
-        1, y se calcula la correlación de Spearman \cite{spearman1904proof},
+        sabe} y \textit{No Aplica} se tratan como faltantes), las binarias con 0 
+        y 1, calculando la correlación de Spearman \cite{spearman1904proof}.
+
+        \vspace{10pt}
+
         \begin{equation}
             \label{spearman}
-            \rho = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n\,(n^2 - 1)},
+            \rho = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n\,(n^2 - 1)}
         \end{equation}
-        donde $d_i$ es la diferencia entre los rangos de las dos variables para la
+
+        \vspace{10pt}
+        
+        Donde $d_i$ es la diferencia entre los rangos de las dos variables para la
         observación $i$. Se eligió Spearman en lugar de Pearson porque mide
-        asociaciones monótonas, no solo lineales, y es apropiada para variables
-        ordinales. La matriz incluye los puntajes por área para documentar el
-        contraste entre una variable explicativa legítima y una que forma parte de
-        la respuesta.
+        asociaciones monótonas no solo lineales y es apropiada para variables
+        ordinales.
 
         \vspace{10pt}
 
@@ -206,12 +215,10 @@
 
         Finalmente se ajusta una regresión lineal exploratoria sobre las
         variables codificadas, excluidos los puntajes por área, con una muestra
-        aleatoria de 200.000 filas completas y una partición 80/20. No es el
-        modelo de referencia de la fase 2, que se construirá con la limpieza
-        completa y la partición definitiva, sino una cota rápida de cuánta
-        varianza del puntaje explican las variables candidatas en conjunto,
-        medida con el coeficiente de determinación $R^2$ y el error absoluto medio
-        (MAE).
+        aleatoria de 200.000 filas completas y una partición 80/20, siendo 
+        una cota rápida de cuánta varianza del puntaje explican las variables 
+        candidatas en conjunto, medida con el coeficiente de determinación 
+        $R^2$ y el error absoluto medio (MAE).
 
         \vspace{10pt}
 
