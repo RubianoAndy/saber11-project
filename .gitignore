@@ -45,5 +45,11 @@ Thumbs.db
 .vscode/*
 !.vscode/settings.json
 .idea/
-reports/entregable1/main.synctex(busy)
-reports/entregable1/main.pdf
+
+# LaTeX: archivos de compilación y salida PDF de los informes
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+reports/**/main.pdf
+reports/**/build/
+/build/
