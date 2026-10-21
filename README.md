@@ -83,7 +83,9 @@ Una restricción metodológica atraviesa todo el proyecto: el puntaje global es 
 │       ├── main.tex                  # Documento principal (preámbulo + \input de secciones)
 │       ├── main.pdf                  # Informe compilado (17 páginas)
 │       ├── IEEEtran.cls              # Clase LaTeX del formato IEEE conference
-│       ├── references.bib            # Bibliografía IEEE (14 referencias)
+│       ├── utils/
+│       │   └── references/
+│       │       └── references.bib    # Bibliografía IEEE (14 referencias)
 │       └── src/
 │           ├── sections/             # abstract, introduction, problem, dataset, methodology, results, conclusions
 │           └── appendices/           # Apéndice A: cuaderno de Google Colab
@@ -278,7 +280,7 @@ Para limpiar los artefactos temporales:
 cd reports/entregable1 && latexmk -c
 ```
 
-> ⚠️ **No compilar con `-outdir` ni con `-output-directory`.** BibTeX se ejecuta con el directorio de trabajo en la carpeta de salida y no encuentra `references.bib`: el informe queda con todas las citas sin resolver. El archivo [`.vscode/settings.json`](.vscode/settings.json) fija `latex-workshop.latex.outDir` en `%DIR%` para este proyecto, y prevalece sobre la configuración global de VS Code (si esta apunta a `%DIR%/build`, borra la carpeta `build` que haya quedado).
+> ⚠️ **No compilar con `-outdir` ni con `-output-directory`.** BibTeX se ejecuta con el directorio de trabajo en la carpeta de salida y no encuentra `utils/references/references.bib`: el informe queda con todas las citas sin resolver. El archivo [`.vscode/settings.json`](.vscode/settings.json) fija `latex-workshop.latex.outDir` en `%DIR%` para este proyecto, y prevalece sobre la configuración global de VS Code (si esta apunta a `%DIR%/build`, borra la carpeta `build` que haya quedado).
 
 ---
 
