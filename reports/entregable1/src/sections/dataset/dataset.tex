@@ -2,37 +2,36 @@
     \subsection{Origen y licencia}
         El conjunto \textit{Resultados únicos Saber 11} es publicado por el
         Instituto Colombiano para la Evaluación de la Educación (ICFES) en el
-        Portal Nacional de Datos Abiertos de Colombia, bajo el identificador
+        Portal Nacional de Datos Abiertos de Colombia bajo el identificador
         \texttt{kgxf-xxbe} y con licencia Creative Commons Attribution-ShareAlike
         4.0 (CC BY-SA 4.0), que permite su uso, redistribución y adaptación con
-        atribución \cite{icfes2023resultados}. Reúne 7,1 millones de registros
-        anónimos de las aplicaciones realizadas entre 2010 y 2022, uno por
-        estudiante y periodo, con 51 columnas, y su última actualización data de
-        agosto de 2023.
+        atribución \cite{icfes2023resultados}. Se componne de 7,1 millones de 
+        registros anónimos de las aplicaciones realizadas entre 2010 y 2022, 
+        uno por estudiante y periodo con 51 columnas y su última actualización 
+        data de agosto de 2023.
 
         \vspace{10pt}
 
-        Para este proyecto se extrajo el periodo seleccionado y se publicó en
-        Kaggle como una copia congelada en formato Parquet
+        Para este proyecto se extrajo el periodo 2022-4 y se publicó en
+        Kaggle como una copia congelada en formato Parquet 
         \cite{rubiano2026kaggle}, redistribuida con la misma licencia, como lo
-        exige CC BY-SA 4.0. Es la fuente que consume el cuaderno; no modifica
-        ningún valor respecto del portal.
+        exige CC BY-SA 4.0, siendo el insumo que consume el cuaderno, no se 
+        modifica ningún valor respecto del portal.
 
     \subsection{Periodo seleccionado y tamaño}
         Se trabaja con el periodo 2022-4, correspondiente a la aplicación del
         calendario A del segundo semestre de 2022, que es la que presenta la gran
         mayoría de colegios del país y el periodo más reciente y numeroso del
-        conjunto. Contiene 1.065.888 filas, que ocupan 560 MB en CSV y 31,5 MB en
-        Parquet; como se
-        muestra en la Sección~V, la mitad de ellas son duplicados exactos y el
-        conjunto de trabajo queda en 532.792 estudiantes. La Tabla~\ref{dataset_summary}
-        resume sus características.
+        dataset. Contiene 1.065.888 filas que ocupan 560 MB en CSV y 31,5 MB en
+        Parquet, la mitad de ellas son duplicados exactos y el conjunto de trabajo 
+        queda en 532.792 estudiantes. La Tabla \ref{dataset_summary} resume sus 
+        características.
 
         \begin{table}[H]
             \centering
             \caption{Resumen del conjunto de datos}
             \label{dataset_summary}
-            \begin{tabular}{|l|L{5.4cm}|}
+            \begin{tabular}{|l|L{5cm}|}
                 \hline
                 \textbf{Aspecto} & \textbf{Valor} \\
                 \hline
@@ -62,10 +61,9 @@
         \end{table}
 
     \subsection{Variables}
-        Las 51 columnas se agrupan en cinco bloques según su prefijo, descritos
-        en la Tabla~\ref{variables}. Todas llegan como texto; en el cuaderno las
-        categóricas se leen como \texttt{category}, los puntajes como numéricos y
-        los identificadores como cadena.
+        Las 51 columnas de tipo texto se agrupan en cinco bloques según su prefijo, descritos
+        en la Tabla \ref{variables}. En el cuaderno las categóricas se leen como \texttt{category}, 
+        los puntajes como numéricos y los identificadores como cadena.
 
         \begin{table}[H]
             \centering
@@ -102,7 +100,7 @@
             \end{tabular}
         \end{table}
 
-        La variable objetivo es el puntaje global. Las variables explicativas
-        candidatas son las de los bloques de estudiante, hogar y colegio, más el
-        departamento y el municipio del colegio; los resultados por área se
-        excluyen por la razón que se verifica en la Sección~V.
+        La variable objetivo es el puntaje global, las variables explicativas
+        candidatas son las de los bloques de estudiante, hogar y colegio, más 
+        el departamento y el municipio del colegio, los resultados por área se
+        excluyen por la razón que se verifica más adelante.
