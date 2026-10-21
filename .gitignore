@@ -53,3 +53,7 @@ Thumbs.db
 reports/**/main.pdf
 reports/**/build/
 /build/
+
+# Modelos entrenados (se regeneran con los cuadernos 02 y 03)
+models/*
+!models/.gitkeep

@@ -11,3 +11,5 @@ kagglehub>=0.3
 jupyter>=1.0
 nbconvert>=7.0
 ipykernel>=6.0
+shap>=0.45
+joblib>=1.3

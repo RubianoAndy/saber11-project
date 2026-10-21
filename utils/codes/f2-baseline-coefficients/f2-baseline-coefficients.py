@@ -1,0 +1,12 @@
+coefs = pd.Series(ridge.coef_, index=Xl_train.columns)
+top = coefs.reindex(coefs.abs().sort_values(ascending=False).index[:20]).sort_values()
+
+fig, ax = plt.subplots(figsize=(10, 6.5))
+bars = ax.barh(top.index, top.values, color=[C_BASE if v > 0 else C_ACCENT for v in top.values])
+ax.bar_label(bars, labels=[f"{v:+.1f}" for v in top.values], padding=3, fontsize=8.5)
+ax.axvline(0, color=TINTA, linewidth=0.8)
+ax.set_title("Los 20 coeficientes de mayor magnitud de la regresión Ridge (puntos de puntaje global)")
+ax.set_xlabel("Coeficiente"); ax.tick_params(axis="y", labelsize=8.5)
+ax.set_xlim(top.min() * 1.25, top.max() * 1.25)
+save_fig(fig, "baseline_coefficients")
+plt.show()
