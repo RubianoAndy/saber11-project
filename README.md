@@ -209,6 +209,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 - ✅ Planteamiento, diccionario completo de variables, calidad de los datos, mecanismo de los faltantes, atípicos y análisis exploratorio con pruebas de independencia
 - ✅ Muestra representativa de 1.000 estudiantes publicada en Kaggle y verificada frente a la población
+- ✅ Cuaderno publicado en Google Colab: [01_planteamiento_y_eda.ipynb](https://colab.research.google.com/drive/1ZybSD0XQSMoUJTKZBl1NM1c8CMhMlfNG?usp=sharing)
 
 ### ✅ Fase 2 · Preparación y modelo base
 
@@ -228,7 +229,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 - ⏳ Informe final
 - ⏳ Sustentación (28 nov. 2026)
-- ⏳ Publicar los cuadernos en Google Colab y registrar sus enlaces en esta sección
+- ⏳ Publicar los cuadernos 02 y 03 en Google Colab y registrar sus enlaces en esta sección
 
 ---
 
@@ -241,6 +242,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 ## 🔗 Recursos
 
 - [Tablero publicado](https://saber11-dashboard.streamlit.app/) · [código del tablero](https://github.com/RubianoAndy/saber11-dashboard)
+- [Cuaderno 01 en Google Colab — planteamiento y EDA](https://colab.research.google.com/drive/1ZybSD0XQSMoUJTKZBl1NM1c8CMhMlfNG?usp=sharing)
 - [Dataset — Resultados únicos Saber 11 (datos.gov.co)](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)
 - [Muestra utilizada — Saber 11 Colombia - Muestra 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-muestra-2022-4)
 - [Población — Saber 11 Colombia - Resultados 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)
