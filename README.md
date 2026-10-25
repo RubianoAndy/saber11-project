@@ -221,6 +221,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 - ✅ Regresión (Ridge, Lasso, ElasticNet, Random Forest, Gradient Boosting, perceptrón en PyTorch), clasificación (Random Forest, SVM, KNN), K-means, jerárquico y DBSCAN
 - ✅ Validación cruzada repetida, intervalos por *bootstrap*, SHAP, permutación, dependencia parcial y análisis de errores
+- ✅ Cuaderno publicado en Google Colab: [03_modelos_y_evaluacion.ipynb](https://colab.research.google.com/drive/18CQHQRNCsCrFLhedUnWjY9_FkcgKFrK2?usp=sharing)
 
 ### ✅ Fase 4 · Tablero
 
@@ -230,7 +231,6 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 - ⏳ Informe final
 - ⏳ Sustentación (28 nov. 2026)
-- ⏳ Publicar el cuaderno 03 en Google Colab y registrar su enlace en esta sección
 
 ---
 
@@ -245,6 +245,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 - [Tablero publicado](https://saber11-dashboard.streamlit.app/) · [código del tablero](https://github.com/RubianoAndy/saber11-dashboard)
 - [Cuaderno 01 en Google Colab, planteamiento y EDA](https://colab.research.google.com/drive/1ZybSD0XQSMoUJTKZBl1NM1c8CMhMlfNG?usp=sharing)
 - [Cuaderno 02 en Google Colab, preparación y modelos de referencia](https://colab.research.google.com/drive/1A9CNocNvGfdnO8o6dC7Jk5QO78pl7U5X?usp=sharing)
+- [Cuaderno 03 en Google Colab, modelos, segmentación e interpretabilidad](https://colab.research.google.com/drive/18CQHQRNCsCrFLhedUnWjY9_FkcgKFrK2?usp=sharing)
 - [Dataset — Resultados únicos Saber 11 (datos.gov.co)](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)
 - [Muestra utilizada — Saber 11 Colombia - Muestra 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-muestra-2022-4)
 - [Población — Saber 11 Colombia - Resultados 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)
