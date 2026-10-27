@@ -15,12 +15,12 @@
 | **Autor** | Andrés Giovanny Rubiano Muñoz "Andy Rubiano" |
 | **Correo** | arubiano67@unisalle.edu.co |
 | **Asignatura** | Ciencia de Datos |
-| **Actividad** | Proyecto Integrador de Ciencia de Datos e Inteligencia Artificial · Fases 1 a 4 |
+| **Actividad** | Proyecto de ciencia de datos sobre la prueba Saber 11 · Fases 1 a 4 |
 | **Programa** | Maestría en Inteligencia Artificial |
 | **Universidad** | Universidad de La Salle |
 | **Líneas de Trabajo** | Análisis Exploratorio de Datos, Aprendizaje Supervisado y No Supervisado, Interpretabilidad, Despliegue |
 | **Año** | 2026 |
-| **Estado** | Cuadernos de las fases 1 a 3 completados · Tablero desplegado · Sustentación pendiente |
+| **Estado** | Completado · Cuadernos de las fases 1 a 3, tablero desplegado e informe final |
 | **Tablero** | [saber11-dashboard.streamlit.app](https://saber11-dashboard.streamlit.app/) · código en [RubianoAndy/saber11-dashboard](https://github.com/RubianoAndy/saber11-dashboard) |
 
 ---
@@ -42,7 +42,7 @@ El trabajo se organiza en cuatro fases:
 - **Fase 1 · Problema y exploración de datos** — planteamiento, descripción detallada de las 51 variables, calidad de los datos y análisis exploratorio. ✅ `01_planteamiento_y_eda.ipynb`
 - **Fase 2 · Preparación y modelo base** — mecanismo de los faltantes, atípicos, variables derivadas, codificación y escalado sin fuga, partición estratificada y modelos de referencia. ✅ `02_preparacion_y_baseline.ipynb`
 - **Fase 3 · Modelado y evaluación** — regresión regularizada y ensambles, clasificadores, perceptrón multicapa en PyTorch, segmentación con K-means y jerárquico, hiperparámetros por validación cruzada e interpretabilidad. ✅ `03_modelos_y_evaluacion.ipynb`
-- **Fase 4 · Tablero y comunicación** — tablero interactivo desplegado en Streamlit Community Cloud. ✅ [saber11-dashboard](https://saber11-dashboard.streamlit.app/) · informe y sustentación pendientes
+- **Fase 4 · Tablero y comunicación** — tablero interactivo desplegado en Streamlit Community Cloud. ✅ [saber11-dashboard](https://saber11-dashboard.streamlit.app/) · informe final en [saber11-report](https://github.com/RubianoAndy/saber11-report)
 
 Una restricción metodológica atraviesa todo el proyecto: el puntaje global es un **promedio ponderado de los puntajes por área**, de modo que esos puntajes no pueden usarse como variables explicativas sin incurrir en una fuga de información (*data leakage*). Solo se emplean en la segmentación, donde son la materia de estudio y no un predictor.
 
@@ -227,10 +227,9 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 - ✅ Tablero en Streamlit desplegado: [saber11-dashboard.streamlit.app](https://saber11-dashboard.streamlit.app/)
 
-### ⏳ Pendiente
+### ✅ Informe final
 
-- ⏳ Informe final
-- ⏳ Sustentación (28 nov. 2026)
+- ✅ Informe técnico en LaTeX (formato IEEE): [RubianoAndy/saber11-report](https://github.com/RubianoAndy/saber11-report)
 
 ---
 
