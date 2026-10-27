@@ -42,8 +42,7 @@ El trabajo se organiza en cuatro fases:
 - **Fase 1 · Problema y exploración de datos** — planteamiento, descripción detallada de las 51 variables, calidad de los datos y análisis exploratorio. ✅ `01_planteamiento_y_eda.ipynb`
 - **Fase 2 · Preparación y modelo base** — mecanismo de los faltantes, atípicos, variables derivadas, codificación y escalado sin fuga, partición estratificada y modelos de referencia. ✅ `02_preparacion_y_baseline.ipynb`
 - **Fase 3 · Modelado y evaluación** — regresión regularizada y ensambles, clasificadores, perceptrón multicapa en PyTorch, segmentación con K-means y jerárquico, hiperparámetros por validación cruzada e interpretabilidad. ✅ `03_modelos_y_evaluacion.ipynb`
-- **Fase 4 · Tablero y comunicación** — tablero interactivo desplegado en Streamlit Community Cloud. ✅ [saber11-dashboard](https://saber11-dashboard.streamlit.app/) · informe final en [saber11-report](https://github.com/RubianoAndy/saber11-report)
-
+- **Fase 4 · Tablero y comunicación** — tablero interactivo desplegado en Streamlit Community Cloud. ✅ [saber11-dashboard](https://saber11-dashboard.streamlit.app/)
 Una restricción metodológica atraviesa todo el proyecto: el puntaje global es un **promedio ponderado de los puntajes por área**, de modo que esos puntajes no pueden usarse como variables explicativas sin incurrir en una fuga de información (*data leakage*). Solo se emplean en la segmentación, donde son la materia de estudio y no un predictor.
 
 ### Objetivos Principales
@@ -93,7 +92,7 @@ Cada fase se desarrolla en un **cuaderno de Google Colab** dentro de `notebooks/
 
 ### Fase 1 · Conjunto de datos
 
-Se utiliza el conjunto **Resultados únicos Saber 11**, publicado por el ICFES en el Portal Nacional de Datos Abiertos ([datos.gov.co/d/kgxf-xxbe](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)) bajo licencia **CC BY-SA 4.0**, periodo **2022-4**. Se trabaja con una **muestra representativa de 1.000 estudiantes**, extraída por muestreo estratificado de los 532.792 evaluados y publicada en Kaggle como [`andyrubiano/saber-11-muestra-2022-4`](https://www.kaggle.com/datasets/andyrubiano/saber-11-muestra-2022-4) (la población completa está en [`andyrubiano/saber-11-resultados-2022-4`](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)). Es la única fuente que consumen los cuadernos, de modo que el análisis es reproducible aunque el portal actualice sus datos.
+Se utiliza el conjunto **Resultados únicos Saber 11**, publicado por el ICFES en el Portal Nacional de Datos Abiertos ([datos.gov.co/d/kgxf-xxbe](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)) bajo licencia **CC BY-SA 4.0**, periodo **2022-4**. Se trabaja con una **muestra representativa de 1.000 estudiantes**, extraída por muestreo estratificado de los 532.792 evaluados y publicada en Kaggle como [`andyrubiano/saber-11-muestra-2022-4`](https://www.kaggle.com/datasets/andyrubiano/saber-11-muestra-2022-4). Es la única fuente que consumen los cuadernos, de modo que el análisis es reproducible aunque el portal actualice sus datos.
 
 | Aspecto | Valor |
 |---|---|
@@ -105,7 +104,7 @@ Se utiliza el conjunto **Resultados únicos Saber 11**, publicado por el ICFES e
 | Variable objetivo | `punt_global` — puntaje global (0 a 500) |
 | Excluidas por fuga | `punt_lectura_critica`, `punt_matematicas`, `punt_sociales_ciudadanas`, `punt_c_naturales`, `punt_ingles`, `desemp_ingles` |
 
-El cuaderno 01 incluye el diccionario completo de variables, el análisis del mecanismo de los faltantes (no son aleatorios: el cuestionario incompleto se asocia con 24,6 puntos menos), la detección de atípicos, estadística descriptiva univariada, correlaciones de Spearman, pruebas χ² con V de Cramér y una verificación de la versatilidad de la muestra frente a la población.
+El cuaderno 01 incluye el diccionario completo de variables, el análisis del mecanismo de los faltantes (no son aleatorios: el cuestionario incompleto se asocia con 24,6 puntos menos), la detección de atípicos, estadística descriptiva univariada, correlaciones de Spearman, pruebas χ² con V de Cramér y una verificación de la representatividad de la muestra frente a la población.
 
 ### Fase 2 · Preparación y modelo de referencia
 
@@ -140,7 +139,7 @@ Hiperparámetros por búsqueda con **validación cruzada de 5 pliegues repetida 
 
 **Segmentación:** K-means por nivel (puntajes por área y edad, K = 3: alto desempeño, bajo a medio y adultos de jornada nocturna y sabatina; silueta 0,38) y por perfil relativo (áreas menos el promedio del estudiante, K = 2: fuerte en lectura crítica y débil en inglés, o al revés; silueta 0,19); jerárquico de Ward con dendrograma (índice de Rand ajustado 0,40 frente a K-means) y DBSCAN, que confirma que los adultos son ruido y no un grupo propio.
 
-**Interpretabilidad:** SHAP (aditividad exacta) y permutación coinciden en que la edad es la variable dominante, seguida de la educación de la madre y del padre, la región, el internet en el hogar y la jornada.
+**Interpretabilidad:** SHAP (aditividad exacta) y permutación coinciden en que la edad es la variable dominante, seguida de la educación de la madre y del padre, la región, el internet en el hogar y la jornada. La figura `interpretability.png` muestra ambas importancias a la izquierda, con la leyenda debajo del eje, y el *beeswarm* de SHAP a la derecha, que se dibuja con `plot_size=None` para que no cambie el tamaño de la figura ni se superponga al otro panel.
 
 ### Fase 4 · Tablero
 
@@ -229,7 +228,7 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 
 ### ✅ Informe final
 
-- ✅ Informe técnico en LaTeX (formato IEEE): [RubianoAndy/saber11-report](https://github.com/RubianoAndy/saber11-report)
+- ✅ Informe técnico en LaTeX (formato IEEE)
 
 ---
 
@@ -247,7 +246,6 @@ El cuarto comando registra el entorno virtual como el kernel `python3` de Jupyte
 - [Cuaderno 03 en Google Colab, modelos, segmentación e interpretabilidad](https://colab.research.google.com/drive/18CQHQRNCsCrFLhedUnWjY9_FkcgKFrK2?usp=sharing)
 - [Dataset — Resultados únicos Saber 11 (datos.gov.co)](https://www.datos.gov.co/Educaci-n/Resultados-nicos-Saber-11/kgxf-xxbe)
 - [Muestra utilizada — Saber 11 Colombia - Muestra 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-muestra-2022-4)
-- [Población — Saber 11 Colombia - Resultados 2022-4 (Kaggle)](https://www.kaggle.com/datasets/andyrubiano/saber-11-resultados-2022-4)
 - [kagglehub](https://github.com/Kaggle/kagglehub)
 - [ICFES — Prueba Saber 11](https://www.icfes.gov.co/evaluaciones-icfes/saber-11/)
 - [scikit-learn — Documentación](https://scikit-learn.org/stable/)
